@@ -1,0 +1,2082 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新3年生留学生向け就職サポート</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2d3e50;
+            --secondary-color: #4caf50;
+            --accent-color: #ff9800;
+            --text-color: #333;
+            --warning-color: #e91e63;
+            --urgent-color: #f44336;
+            --specified-color: #9c27b0;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .language-selector-container {
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+
+        .language-selector {
+            padding: 0.5rem;
+            border-radius: 4px;
+            background: white;
+            color: var(--primary-color);
+            border: 1px solid #ddd;
+        }
+
+        nav {
+            background-color: white;
+            padding: 1rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            overflow-x: auto;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            display: flex;
+            gap: 0.5rem;
+            margin: 0 auto;
+            max-width: 1200px;
+        }
+
+        nav a {
+            color: var(--primary-color);
+            padding: 0.8rem 1.2rem;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            border: 1px solid #ddd;
+            font-weight: bold;
+        }
+
+        nav a:hover,
+        nav a.active {
+            background-color: var(--secondary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        main {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            display: none;
+        }
+
+        .content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .content h2 {
+            color: var(--primary-color);
+            margin-top: 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid var(--secondary-color);
+        }
+
+        /* セクション別スタイル */
+        #schedule { border-left: 4px solid #4caf50; }
+        #visa { border-left: 4px solid #2196F3; }
+        #specified { border-left: 4px solid var(--specified-color); }
+        #industry { border-left: 4px solid #9C27B0; }
+        #skills { border-left: 4px solid #FF9800; }
+        #success { border-left: 4px solid #E91E63; }
+        #urgent { border-left: 4px solid #f44336; }
+        #additional { border-left: 4px solid #009688; }
+
+        .icon {
+            margin-right: 0.5rem;
+        }
+
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        /* 警告ボックス */
+        .warning-box {
+            background-color: #fff3f3;
+            border-left: 4px solid var(--warning-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .warning-box h3 {
+            color: var(--warning-color);
+            margin-top: 0;
+        }
+
+        /* 緊急ボックス */
+        .urgent-box {
+            background-color: #ffebee;
+            border-left: 4px solid var(--urgent-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .urgent-box h3 {
+            color: var(--urgent-color);
+            margin-top: 0;
+        }
+
+        /* 特定技能ボックス */
+        .specified-box {
+            background-color: #f3e5f5;
+            border-left: 4px solid var(--specified-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .specified-box h3 {
+            color: var(--specified-color);
+            margin-top: 0;
+        }
+
+        /* ケースカード */
+        .case-card {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .case-card h3 {
+            margin-top: 0;
+            color: var(--primary-color);
+        }
+
+        /* タイムライン */
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+            margin: 2rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--secondary-color);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--secondary-color);
+        }
+
+        .timeline-date {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        /* チェックリスト */
+        .checklist {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .checklist li {
+            margin-bottom: 0.8rem;
+            padding-left: 2rem;
+            position: relative;
+        }
+
+        .checklist li::before {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: var(--secondary-color);
+        }
+
+        /* カレンダー */
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .calendar-month {
+            background: #f5f5f5;
+            padding: 1.5rem;
+            border-radius: 8px;
+        }
+
+        .calendar-month h4 {
+            margin-top: 0;
+            color: var(--primary-color);
+            text-align: center;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--secondary-color);
+        }
+
+        .calendar-events {
+            margin-top: 1rem;
+        }
+
+        .calendar-event {
+            position: relative;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .calendar-event:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .calendar-event strong {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .priority {
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .priority[data-i18n="schedule.priorityHigh"] {
+            background-color: var(--urgent-color);
+            color: white;
+        }
+
+        .priority[data-i18n="schedule.priorityMedium"] {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .priority[data-i18n="schedule.priorityLow"] {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .event-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            padding-left: 1rem;
+            border-left: 2px solid #eee;
+            margin-top: 0.5rem;
+        }
+
+        .event-details p {
+            margin: 0.5rem 0;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .event-details p:before {
+            content: "• ";
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        .calendar-event.active .event-details {
+            max-height: 500px;
+            padding-top: 0.5rem;
+        }
+
+        /* レスポンシブデザイン */
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem;
+            }
+
+            .language-selector-container {
+                position: static;
+                margin-top: 1rem;
+                width: 100%;
+            }
+
+            .nav-container {
+                flex-wrap: wrap;
+            }
+
+            nav a {
+                flex: 1 1 auto;
+                text-align: center;
+            }
+
+            main {
+                padding: 1rem;
+            }
+
+            .content {
+                padding: 1.5rem;
+            }
+
+            .calendar-event {
+                padding: 0.8rem;
+            }
+            
+            .event-details p {
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-container {
+                flex-direction: column;
+            }
+            
+            nav a {
+                width: 100%;
+                margin-bottom: 0.5rem;
+            }
+
+            table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* スクリーンリーダー用 */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <h1 data-i18n="title">新3年生留学生向け就職サポート</h1>
+            <p data-i18n="subtitle">日本の早期就活スケジュールに合わせた完全ガイド</p>
+            <div class="language-selector-container">
+                <label for="languageSelect" class="sr-only">言語選択</label>
+                <select class="language-selector" id="languageSelect" aria-label="言語選択" onchange="changeLanguage()">
+                    <option value="ja">日本語</option>
+                    <option value="zh">中文</option>
+                    <option value="ko">한국어</option>
+                    <option value="en">English</option>
+                </select>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <div class="nav-container">
+            <a href="#schedule" class="active" data-section="schedule">
+                <i class="fas fa-calendar-alt icon" aria-hidden="true"></i>
+                <span data-i18n="nav.schedule">就活スケジュール</span>
+            </a>
+            <a href="#urgent" data-section="urgent">
+                <i class="fas fa-exclamation-triangle icon" aria-hidden="true"></i>
+                <span data-i18n="nav.urgent">今すぐやること</span>
+            </a>
+            <a href="#visa" data-section="visa">
+                <i class="fas fa-passport icon" aria-hidden="true"></i>
+                <span data-i18n="nav.visa">ビザガイド</span>
+            </a>
+            <a href="#specified" data-section="specified">
+                <i class="fas fa-id-card-alt icon" aria-hidden="true"></i>
+                <span data-i18n="nav.specified">特定技能ビザ</span>
+            </a>
+            <a href="#industry" data-section="industry">
+                <i class="fas fa-industry icon" aria-hidden="true"></i>
+                <span data-i18n="nav.industry">業界別情報</span>
+            </a>
+            <a href="#skills" data-section="skills">
+                <i class="fas fa-tools icon" aria-hidden="true"></i>
+                <span data-i18n="nav.skills">必須スキル</span>
+            </a>
+            <a href="#success" data-section="success">
+                <i class="fas fa-trophy icon" aria-hidden="true"></i>
+                <span data-i18n="nav.success">成功事例</span>
+            </a>
+            <a href="#additional" data-section="additional">
+                <i class="fas fa-info-circle icon" aria-hidden="true"></i>
+                <span data-i18n="nav.additional">追加リソース</span>
+            </a>
+        </div>
+    </nav>
+
+    <main>
+        <!-- スケジュールセクション -->
+        <section id="schedule" class="content active">
+            <h2 data-i18n="schedule.title">3年生の就活スケジュール</h2>
+            <p data-i18n="schedule.description">日本の就職活動は早期化しています。3年生のうちから計画的に準備を進めましょう。</p>
+            
+            <div class="urgent-box">
+                <h3 data-i18n="schedule.urgentTitle">緊急対応が必要です！</h3>
+                <p data-i18n="schedule.urgentContent">日本の就職活動は3年生の3月（大学3年次の終わり）から本格化します。今すぐ準備を開始しましょう！</p>
+            </div>
+            
+            <div class="calendar">
+                <!-- 4月 -->
+                <div class="calendar-month">
+                    <h4 data-i18n="schedule.month1">4月（3年生開始）</h4>
+                    <div class="calendar-events">
+                        <div class="calendar-event">
+                            <strong data-i18n="schedule.event1_1">自己分析の開始</strong> <span class="priority" data-i18n="schedule.priorityHigh">高優先度</span>
+                            <div class="event-details">
+                                <p data-i18n="schedule.event1_1_detail1">【具体的な行動】: 大学のキャリアセンターで配布されている自己分析シートを使用するか、オンラインツール（例: リクナビの自己分析ツール）を利用</p>
+                                <p data-i18n="schedule.event1_1_detail2">【成功のコツ】: 母国語でまず考えを整理し、その後日本語で表現する二段階方式がおすすめ</p>
+                                <p data-i18n="schedule.event1_1_detail3">【留学生向けポイント】: 日本語能力と異文化適応力を強みとしてアピールできるよう整理</p>
+                                <p data-i18n="schedule.event1_1_detail4">【所要時間】: 約10時間（複数回に分けて実施可）</p>
+                            </div>
+                        </div>
+                        <div class="calendar-event">
+                            <strong data-i18n="schedule.event1_2">業界研究の開始</strong> <span class="priority" data-i18n="schedule.priorityMedium">中優先度</span>
+                            <div class="event-details">
+                                <p data-i18n="schedule.event1_2_detail1">【具体的な行動】: 興味のある業界を3つ選び、各業界の特徴・主要企業・将来性を調べる</p>
+                                <p data-i18n="schedule.event1_2_detail2">【成功のコツ】: 留学生の採用実績がある企業に注目し、OB/OG訪問を計画</p>
+                                <p data-i18n="schedule.event1_2_detail3">【留学生向けポイント】: ビザスポンサー実績のある企業を優先的に調査</p>
+                            </div>
+                        </div>
+                        <div class="calendar-event">
+                            <strong data-i18n="schedule.event1_3">日本語能力試験(N2以上)の受験計画</strong> <span class="priority" data-i18n="schedule.priorityHigh">高優先度</span>
+                            <div class="event-details">
+                                <p data-i18n="schedule.event1_3_detail1">【具体的な行動】: 7月と12月の試験日程を確認し、学習スケジュールを作成</p>
+                                <p data-i18n="schedule.event1_3_detail2">【成功のコツ】: 週に10時間の学習時間を確保し、模擬試験を定期的に受ける</p>
+                                <p data-i18n="schedule.event1_3_detail3">【留学生向けポイント】: ビジネス日本語に特化した教材を使用する</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 5月 -->
+                <div class="calendar-month">
+                    <h4 data-i18n="schedule.month2">5月</h4>
+                    <div class="calendar-events">
+                        <div class="calendar-event">
+                            <strong data-i18n="schedule.event2_1">キャリアセンター登録</strong> <span class="priority" data-i18n="schedule.priorityHigh">高優先度</span>
+                            <div class="event-details">
+                                <p data-i18n="schedule.event2_1_detail1">【具体的な行動】: 大学のキャリアセンターに登録し、留学生向けの就職支援プログラムを確認</p>
+                                <p data-i18n="schedule.event2_1_detail2">【成功のコツ】: 定期的にキャリアアドバイザーと面談を設定</p>
+                                <p data-i18n="schedule.event2_1_detail3">【留学生向けポイント】: ビザ関連の相談ができるアドバイザーを探す</p>
+                            </div>
+                        </div>
+                        <div class="calendar-event">
+                            <strong data-i18n="schedule.event2_2">エントリーシートの書き方講座</strong> <span class="priority" data-i18n="schedule.priorityMedium">中優先度</span>
+                            <div class="event-details">
+                                <p data-i18n="schedule.event2_2_detail1">【具体的な行動】: キャリアセンターや就活サイトが主催する講座に参加</p>
+                                <p data-i18n="schedule.event2_2_detail2">【成功のコツ】: 実際のESを3つ以上書き、添削を受ける</p>
+                                <p data-i18n="schedule.event2_2_detail3">【留学生向けポイント】: 日本語ネイティブチェックを必ず受ける</p>
+                            </div>
+                        </div>
+                        <div class="calendar-event">
+                            <strong data-i18n="schedule.event2_3">ビジネス日本語クラスの受講</strong> <span class="priority" data-i18n="schedule.priorityHigh">高優先度</span>
+                            <div class="event-details">
+                                <p data-i18n="schedule.event2_3_detail1">【具体的な行動】: 大学や地域の日本語学校が提供するビジネス日本語コースに申し込む</p>
+                                <p data-i18n="schedule.event2_3_detail2">【成功のコツ】: 敬語やビジネスマナーに重点を置く</p>
+                                <p data-i18n="schedule.event2_3_detail3">【留学生向けポイント】: 面接ロールプレイを含むコースを選ぶ</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 6月 -->
+                <div class="calendar-month">
+                    <h4 data-i18n="schedule.month3">6月</h4>
+                    <div class="calendar-events">
+                        <div class="calendar-event">
+                            <strong data-i18n="schedule.event3_1">夏季インターンシップ応募</strong> <span class="priority" data-i18n="schedule.priorityHigh">高優先度</span>
+                            <div class="event-details">
+                                <p data-i18n="schedule.event3_1_detail1">【具体的な行動】: 志望業界のインターンシップ情報を収集し、5社以上に応募</p>
+                                <p data-i18n="schedule.event3_1_detail2">【成功のコツ】: 留学生歓迎と明記されているプログラムを優先</p>
+                                <p data-i18n="schedule.event3_1_detail3">【留学生向けポイント】: ビザサポートのあるインターンシップを確認</p>
+                            </div>
+                        </div>
+                        <div class="calendar-event">
+                            <strong data-i18n="schedule.event3_2">SPI試験対策開始</strong> <span class="priority" data-i18n="schedule.priorityMedium">中優先度</span>
+                            <div class="event-details">
+                                <p data-i18n="schedule.event3_2_detail1">【具体的な行動】: SPI対策本を購入し、週に2回模擬試験を受ける</p>
+                                <p data-i18n="schedule.event3_2_detail2">【成功のコツ】: 苦手分野を特定し、重点的に学習</p>
+                                <p data-i18n="schedule.event3_2_detail3">【留学生向けポイント】: 日本語の語彙問題に注力する</p>
+                            </div>
+                        </div>
+                        <div class="calendar-event">
+                            <strong data-i18n="schedule.event3_3">企業説明会への参加</strong> <span class="priority" data-i18n="schedule.priorityHigh">高優先度</span>
+                            <div class="event-details">
+                                <p data-i18n="schedule.event3_3_detail1">【具体的な行動】: 大学のキャリアサイトで留学生向け説明会を検索し、予約</p>
+                                <p data-i18n="schedule.event3_3_detail2">【成功のコツ】: 事前に企業研究を行い、質問を準備</p>
+                                <p data-i18n="schedule.event3_3_detail3">【留学生向けポイント】: ビザ対応について必ず質問する</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 7月-8月 -->
+                <div class="calendar-month">
+                    <h4 data-i18n="schedule.month4">7月-8月</h4>
+                    <div class="calendar-events">
+                        <div class="calendar-event">
+                            <strong data-i18n="schedule.event4_1">夏季インターンシップ参加</strong> <span class="priority" data-i18n="schedule.priorityHigh">高優先度</span>
+                            <div class="event-details">
+                                <p data-i18n="schedule.event4_1_detail1">【具体的な行動】: インターンシップに積極的に参加し、ネットワークを構築</p>
+                                <p data-i18n="schedule.event4_1_detail2">【成功のコツ】: 最終日にフィードバックを求め、改善点をメモ</p>
+                                <p data-i18n="schedule.event4_1_detail3">【留学生向けポイント】: インターン中の成果を英語と日本語で記録</p>
+                            </div>
+                        </div>
+                        <div class="calendar-event">
+                            <strong data-i18n="schedule.event4_2">業界別セミナー参加</strong> <span class="priority" data-i18n="schedule.priorityMedium">中優先度</span>
+                            <div class="event-details">
+                                <p data-i18n="schedule.event4_2_detail1">【具体的な行動】: 興味のある業界のセミナーに3つ以上参加</p>
+                                <p data-i18n="schedule.event4_2_detail2">【成功のコツ】: 名刺を作成し、積極的に質問する</p>
+                                <p data-i18n="schedule.event4_2_detail3">【留学生向けポイント】: グローバル部門の担当者と接触を図る</p>
+                            </div>
+                        </div>
+                        <div class="calendar-event">
+                            <strong data-i18n="schedule.event4_3">エントリーシート作成</strong> <span class="priority" data-i18n="schedule.priorityHigh">高優先度</span>
+                            <div class="event-details">
+                                <p data-i18n="schedule.event4_3_detail1">【具体的な行動】: 志望企業5社分のESを完成させる</p>
+                                <p data-i18n="schedule.event4_3_detail2">【成功のコツ】: ストーリー性を持たせ、具体的なエピソードを入れる</p>
+                                <p data-i18n="schedule.event4_3_detail3">【留学生向けポイント】: 異文化経験を強みとしてアピール</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 9月-12月 -->
+                <div class="calendar-month">
+                    <h4 data-i18n="schedule.month5">9月-12月</h4>
+                    <div class="calendar-events">
+                        <div class="calendar-event">
+                            <strong data-i18n="schedule.event5_1">本選考のエントリー開始</strong> <span class="priority" data-i18n="schedule.priorityHigh">高優先度</span>
+                            <div class="event-details">
+                                <p data-i18n="schedule.event5_1_detail1">【具体的な行動】: 目標企業20社にエントリーし、スケジュールを管理</p>
+                                <p data-i18n="schedule.event5_1_detail2">【成功のコツ】: 企業ごとにカスタマイズしたESを作成</p>
+                                <p data-i18n="schedule.event5_1_detail3">【留学生向けポイント】: ビザサポートの有無を早期に確認</p>
+                            </div>
+                        </div>
+                        <div class="calendar-event">
+                            <strong data-i18n="schedule.event5_2">筆記試験対策</strong> <span class="priority" data-i18n="schedule.priorityMedium">中優先度</span>
+                            <div class="event-details">
+                                <p data-i18n="schedule.event5_2_detail1">【具体的な行動】: SPI/GAB/玉手箱など、企業ごとの試験形式に合わせて対策</p>
+                                <p data-i18n="schedule.event5_2_detail2">【成功のコツ】: 時間制限を設けて模擬試験を実施</p>
+                                <p data-i18n="schedule.event5_2_detail3">【留学生向けポイント】: 日本語の長文読解に重点を置く</p>
+                            </div>
+                        </div>
+                        <div class="calendar-event">
+                            <strong data-i18n="schedule.event5_3">模擬面接の実施</strong> <span class="priority" data-i18n="schedule.priorityHigh">高優先度</span>
+                            <div class="event-details">
+                                <p data-i18n="schedule.event5_3_detail1">【具体的な行動】: キャリアセンターや友人と週1回模擬面接を行う</p>
+                                <p data-i18n="schedule.event5_3_detail2">【成功のコツ】: ビデオ録画して改善点を分析</p>
+                                <p data-i18n="schedule.event5_3_detail3">【留学生向けポイント】: 日本語の微妙なニュアンスをネイティブにチェックしてもらう</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 1月-3月 -->
+                <div class="calendar-month">
+                    <h4 data-i18n="schedule.month6">1月-3月</h4>
+                    <div class="calendar-events">
+                        <div class="calendar-event">
+                            <strong data-i18n="schedule.event6_1">面接対策の強化</strong> <span class="priority" data-i18n="schedule.priorityHigh">高優先度</span>
+                            <div class="event-details">
+                                <p data-i18n="schedule.event6_1_detail1">【具体的な行動】: 志望企業ごとの面接対策を行い、想定問答集を作成</p>
+                                <p data-i18n="schedule.event6_1_detail2">【成功のコツ】: 企業研究を深め、志望動機を具体化</p>
+                                <p data-i18n="schedule.event6_1_detail3">【留学生向けポイント】: ビザ関連の質問への回答を準備</p>
+                            </div>
+                        </div>
+                        <div class="calendar-event">
+                            <strong data-i18n="schedule.event6_2">内定後の手続き準備</strong> <span class="priority" data-i18n="schedule.priorityHigh">高優先度</span>
+                            <div class="event-details">
+                                <p data-i18n="schedule.event6_2_detail1">【具体的な行動】: 内定を受けた場合のビザ申請書類を確認</p>
+                                <p data-i18n="schedule.event6_2_detail2">【成功のコツ】: 大学の国際課と早期に相談</p>
+                                <p data-i18n="schedule.event6_2_detail3">【留学生向けポイント】: 卒業証明書や成績証明書の準備を前倒しで行う</p>
+                            </div>
+                        </div>
+                        <div class="calendar-event">
+                            <strong data-i18n="schedule.event6_3">ビザ申請の準備</strong> <span class="priority" data-i18n="schedule.priorityMedium">中優先度</span>
+                            <div class="event-details">
+                                <p data-i18n="schedule.event6_3_detail1">【具体的な行動】: 必要書類リストを作成し、順次収集</p>
+                                <p data-i18n="schedule.event6_3_detail2">【成功のコツ】: 企業の人事部門と密に連絡を取る</p>
+                                <p data-i18n="schedule.event6_3_detail3">【留学生向けポイント】: 申請時期を逆算してスケジュール化</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 他のセクションは簡略化して表示 -->
+                <!-- 緊急セクション -->
+                <section id="urgent" class="content">
+                    <h2 data-i18n="urgent.title">今すぐ始めるべきこと</h2>
+                    <p data-i18n="urgent.description">日本の就職活動は非常に早いスケジュールで進行します。以下の項目は今すぐ取り掛かる必要があります。</p>
+                    
+                    <div class="urgent-box">
+                        <h3 data-i18n="urgent.box1Title">日本語能力の確認</h3>
+                        <div data-i18n="urgent.box1Content">
+                            <p>「技術・人文知識・国際業務」ビザを取得するには日本語能力試験N2以上の合格が必須です。まだ取得していない場合は<strong>今すぐ</strong>学習計画を立ててください。</p>
+                            <ul>
+                                <li>JLPT公式サイトで試験日程を確認</li>
+                                <li>週10時間の学習時間を確保</li>
+                                <li>ビジネス日本語に特化した教材を使用</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="urgent-box">
+                        <h3 data-i18n="urgent.box2Title">自己分析の完了</h3>
+                        <div data-i18n="urgent.box2Content">
+                            <p>自己分析は就職活動の基礎です。3年生の4月中に完了させ、自分の強みと志望業界を明確にしましょう。</p>
+                            <ul>
+                                <li>大学のキャリアセンターが提供するワークシートを使用</li>
+                                <li>母国語でまず考えを整理し、その後日本語で表現</li>
+                                <li>留学生ならではの強み（異文化適応力など）を明確に</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="urgent-box">
+                        <h3 data-i18n="urgent.box3Title">キャリアセンターの活用</h3>
+                        <div data-i18n="urgent.box3Content">
+                            <p>大学のキャリアセンターには留学生向けの特別サポートがある場合があります。早めに登録してサービスを活用しましょう。</p>
+                            <ul>
+                                <li>留学生担当のキャリアアドバイザーを確認</li>
+                                <li>ビザ関連の相談が可能か確認</li>
+                                <li>定期的な面談をスケジュール</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <h3 data-i18n="urgent.actionTitle">今週中にやるべきこと</h3>
+                    <ul class="checklist">
+                        <li data-i18n="urgent.action1">日本語能力試験の日程を確認し申し込む</li>
+                        <li data-i18n="urgent.action2">大学のキャリアセンターに相談予約を入れる</li>
+                        <li data-i18n="urgent.action3">自己分析ワークシートをダウンロードして開始する</li>
+                        <li data-i18n="urgent.action4">業界研究のための情報源をリストアップする</li>
+                    </ul>
+                </section>
+        
+                <!-- ビザセクション -->
+                <section id="visa" class="content">
+                    <h2 data-i18n="visa.title">ビザ取得ガイド</h2>
+                    <p data-i18n="visa.description">日本で就職するために必要な在留資格（ビザ）についての情報です。</p>
+                    
+                    <div class="warning-box">
+                        <h3 data-i18n="visa.warningTitle">重要: 日本語能力試験について</h3>
+                        <p data-i18n="visa.warningContent">「技術・人文知識・国際業務」ビザを取得するには日本語能力試験N2以上の合格が事実上必須です。N3やN4では多くの企業が採用を見送ります。</p>
+                    </div>
+                    
+                    <h3 data-i18n="visa.typesTitle">主な就労ビザの種類</h3>
+                    <div class="case-card">
+                        <h4 data-i18n="visa.type1Title">技術・人文知識・国際業務ビザ</h4>
+                        <ul>
+                            <li data-i18n="visa.type1Item1">対象職種: 事務職、エンジニア、翻訳・通訳など</li>
+                            <li data-i18n="visa.type1Item2">必要資格: 大学卒業見込みまたは実務経験</li>
+                            <li data-i18n="visa.type1Item3">日本語能力: N2以上が事実上必須</li>
+                            <li data-i18n="visa.type1Item4">在留期間: 5年/3年/1年</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="case-card">
+                        <h4 data-i18n="visa.type2Title">特定活動ビザ（就職活動）</h4>
+                        <ul>
+                            <li data-i18n="visa.type2Item1">対象: 卒業後の就職活動用</li>
+                            <li data-i18n="visa.type2Item2">在留期間: 最大1年</li>
+                            <li data-i18n="visa.type2Item3">条件: 週28時間以内のアルバイト可能</li>
+                        </ul>
+                    </div>
+                    
+                    <h3 data-i18n="visa.requirementsTitle">ビザ取得に必要な条件</h3>
+                    <ul class="checklist">
+                        <li data-i18n="visa.requirement1">日本語能力試験N2以上の合格（技術・人文知識・国際業務ビザの場合）</li>
+                        <li data-i18n="visa.requirement2">大学または専門学校の卒業見込み</li>
+                        <li data-i18n="visa.requirement3">採用企業からの内定</li>
+                        <li data-i18n="visa.requirement4">業務内容と学歴の関連性</li>
+                    </ul>
+                    
+                    <div class="specified-box">
+                        <h3 data-i18n="visa.noteTitle">注意事項</h3>
+                        <p data-i18n="visa.noteContent">ビザ申請には時間がかかる場合があるので、早めに準備を開始しましょう。大学の国際交流課にも相談してください。</p>
+                    </div>
+                </section>
+        
+                <!-- 特定技能ビザセクション -->
+                <section id="specified" class="content">
+                    <h2 data-i18n="specified.title">特定技能ビザの詳細</h2>
+                    <p data-i18n="specified.description">特定技能ビザは、人手不足が深刻な14の特定産業分野で外国人の就労を可能にする制度です。</p>
+                    
+                    <div class="specified-box">
+                        <h3 data-i18n="specified.box1Title">特定技能ビザの特徴</h3>
+                        <p data-i18n="specified.box1Content">特定技能ビザには2種類あります。特定技能1号（最長5年）と特定技能2号（無制限）。留学生は主に特定技能1号の対象となります。</p>
+                    </div>
+                    
+                    <h3 data-i18n="specified.industriesTitle">主要な特定産業分野</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th data-i18n="specified.tableHeader1">産業分野</th>
+                                <th data-i18n="specified.tableHeader2">必要な技能試験</th>
+                                <th data-i18n="specified.tableHeader3">求められる日本語レベル</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-i18n="specified.industry1">飲食料品製造業</td>
+                                <td data-i18n="specified.exam1">飲食料品製造技能測定試験</td>
+                                <td data-i18n="specified.japanese1">N4相当以上</td>
+                            </tr>
+                            <tr>
+                                <td data-i18n="specified.industry2">外食業</td>
+                                <td data-i18n="specified.exam2">外食業技能測定試験</td>
+                                <td data-i18n="specified.japanese2">N4相当以上</td>
+                            </tr>
+                            <tr>
+                                <td data-i18n="specified.industry3">宿泊業</td>
+                                <td data-i18n="specified.exam3">宿泊業技能測定試験</td>
+                                <td data-i18n="specified.japanese3">N4相当以上</td>
+                            </tr>
+                            <tr>
+                                <td data-i18n="specified.industry4">ビルクリーニング</td>
+                                <td data-i18n="specified.exam4">ビルクリーニング技能測定試験</td>
+                                <td data-i18n="specified.japanese4">N4相当以上</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <h3 data-i18n="specified.supportTitle">特定技能ビザ取得の支援策</h3>
+                    <ul class="checklist">
+                        <li data-i18n="specified.support1">大学のキャリアセンターが技能試験対策講座を開催</li>
+                        <li data-i18n="specified.support2">JITCO（国際人材協力機構）が無料の日本語講座を提供</li>
+                        <li data-i18n="specified.support3">特定技能ビザ専門の就職支援エージェントを利用可能</li>
+                        <li data-i18n="specified.support4">業界団体が実施する事前職業訓練に参加可能</li>
+                    </ul>
+                    
+                    <div class="case-card">
+                        <h3 data-i18n="specified.caseTitle">特定技能ビザでの就職成功事例</h3>
+                        <p data-i18n="specified.caseContent"><strong>アンさん（ベトナム出身）</strong>は大学で観光を専攻。宿泊業技能試験と日本語N3を取得後、東京のホテルで特定技能ビザを取得して就職しました。ホテルは日本語研修と資格取得支援を提供し、2年後にはフロントマネージャーに昇進しました。</p>
+                    </div>
+                </section>
+        
+                <!-- 業界セクション -->
+                <section id="industry" class="content">
+                    <h2 data-i18n="industry.title">業界別就職情報</h2>
+                    <p data-i18n="industry.description">留学生に人気の業界と必要なスキルについての情報です。</p>
+                    
+                    <div class="case-card">
+                        <h3 data-i18n="industry.itTitle">IT業界</h3>
+                        <ul>
+                            <li data-i18n="industry.it1">職種例: システムエンジニア、プログラマー、データサイエンティストなど</li>
+                            <li data-i18n="industry.it2">必要なスキル: プログラミング（Python, Javaなど）、日本語N2以上</li>
+                            <li data-i18n="industry.it3">特徴: 技術力が重視され、日本語能力の要件が比較的緩い場合あり</li>
+                            <li data-i18n="industry.it4">留学生の強み: 英語力と多文化対応能力</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="case-card">
+                        <h3 data-i18n="industry.manufacturingTitle">製造業</h3>
+                        <ul>
+                            <li data-i18n="industry.manufacturing1">職種例: 生産技術、品質管理、研究開発など</li>
+                            <li data-i18n="industry.manufacturing2">必要なスキル: 専門知識、日本語N2以上、英語ができると有利</li>
+                            <li data-i18n="industry.manufacturing3">特徴: ものづくり文化が強く、技術系職種が多い</li>
+                            <li data-i18n="industry.manufacturing4">留学生の強み: 技術知識と日本語の両立</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="case-card">
+                        <h3 data-i18n="industry.serviceTitle">サービス業（観光・ホテルなど）</h3>
+                        <ul>
+                            <li data-i18n="industry.service1">職種例: 通訳ガイド、ホテルスタッフ、カスタマーサポートなど</li>
+                            <li data-i18n="industry.service2">必要なスキル: 高い日本語能力（N1が望ましい）、異文化理解</li>
+                            <li data-i18n="industry.service3">特徴: 接客スキルが重視され、外国語能力が活かせる</li>
+                            <li data-i18n="industry.service4">留学生の強み: 母国語と日本語のバイリンガル能力</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="warning-box">
+                        <h3 data-i18n="industry.noteTitle">業界選択のポイント</h3>
+                        <p data-i18n="industry.noteContent">業界によって求められるスキルや日本語レベルが異なります。自分の強みと日本語レベルを考慮して目標業界を設定しましょう。</p>
+                    </div>
+                </section>
+        
+                <!-- スキルセクション -->
+                <section id="skills" class="content">
+                    <h2 data-i18n="skills.title">必須スキルと資格</h2>
+                    <p data-i18n="skills.description">日本で就職するために必要なスキルと、取得すべき資格について。</p>
+                    
+                    <div class="warning-box">
+                        <h3 data-i18n="skills.japaneseTitle">日本語能力の重要性</h3>
+                        <p data-i18n="skills.japaneseContent">ほとんどの企業でビジネスレベルの日本語（N2以上）が求められます。N1を取得していると選択肢が広がります。特定技能ビザでもN4レベルが必要です。</p>
+                    </div>
+                    
+                    <h3 data-i18n="skills.essentialTitle">必須スキル</h3>
+                    <div class="case-card">
+                        <h4 data-i18n="skills.essential1">日本語能力（N2以上、N1が理想）</h4>
+                        <ul>
+                            <li data-i18n="skills.essential1Detail1">ビジネス会話ができるレベル</li>
+                            <li data-i18n="skills.essential1Detail2">敬語を正しく使えること</li>
+                            <li data-i18n="skills.essential1Detail3">ビジネスメールの書き方</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="case-card">
+                        <h4 data-i18n="skills.essential2">ビジネスマナー</h4>
+                        <ul>
+                            <li data-i18n="skills.essential2Detail1">名刺交換の作法</li>
+                            <li data-i18n="skills.essential2Detail2">電話対応</li>
+                            <li data-i18n="skills.essential2Detail3">会議での発言方法</li>
+                        </ul>
+                    </div>
+                    
+                    <h3 data-i18n="skills.recommendedTitle">推奨スキル（業界による）</h3>
+                    <ul class="checklist">
+                        <li data-i18n="skills.recommended1">プログラミングスキル（IT業界）</li>
+                        <li data-i18n="skills.recommended2">TOEIC 700点以上（国際業務）</li>
+                        <li data-i18n="skills.recommended3">専門分野の資格（簿記、CADなど）</li>
+                        <li data-i18n="skills.recommended4">データ分析スキル</li>
+                    </ul>
+                    
+                    <div class="specified-box">
+                        <h3 data-i18n="skills.tipTitle">スキル習得のヒント</h3>
+                        <p data-i18n="skills.tipContent">大学の授業以外でも、オンライン講座（Udemy、Courseraなど）や地域の職業訓練校を活用してスキルを習得できます。キャリアセンターに相談してみましょう。</p>
+                    </div>
+                </section>
+        
+                <!-- 成功事例セクション -->
+                <section id="success" class="content">
+                    <h2 data-i18n="success.title">先輩留学生の成功事例</h2>
+                    <p data-i18n="success.description">日本での就職に成功した先輩留学生の事例を紹介します。</p>
+                    
+                    <div class="case-card">
+                        <h3 data-i18n="success.case1Title">IT業界で内定（中国出身）</h3>
+                        <div data-i18n="success.case1Content">
+                            <p><strong>李さん</strong>は3年生の4月から就活を開始。N2を取得後、夏季インターンに参加。Pythonのスキルをアピールし、IT企業から内定を得ました。</p>
+                            <ul>
+                                <li>準備期間: 3年生4月～3月</li>
+                                <li>応募企業数: 15社</li>
+                                <li>内定企業: 中堅IT企業のシステムエンジニア職</li>
+                                <li>成功のポイント: 技術ブログ(日本語)を開設しアピール</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="case-card">
+                        <h3 data-i18n="success.case2Title">製造業で内定（ベトナム出身）</h3>
+                        <div data-i18n="success.case2Content">
+                            <p><strong>グエンさん</strong>は大学院で機械工学を専攻。N1を取得し、研究内容をアピールして自動車メーカーから内定。</p>
+                            <ul>
+                                <li>準備期間: 修士1年次から</li>
+                                <li>応募企業数: 8社</li>
+                                <li>内定企業: 大手自動車メーカーの研究開発職</li>
+                                <li>成功のポイント: 学会発表の経験をPR</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="case-card">
+                        <h3 data-i18n="success.case3Title">観光業で内定（韓国出身）</h3>
+                        <div data-i18n="success.case3Content">
+                            <p><strong>キムさん</strong>は3年生の夏までにN1を取得。ホテルでのアルバイト経験を活かし、一流ホテルから内定。</p>
+                            <ul>
+                                <li>準備期間: 2年生後期から</li>
+                                <li>応募企業数: 10社</li>
+                                <li>内定企業: 国際ホテルチェーンのフロント職</li>
+                                <li>成功のポイント: 英語・韓国語・日本語のトリリンガルをアピール</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="case-card">
+                        <h3 data-i18n="success.case4Title">特定技能ビザで就職（フィリピン出身）</h3>
+                        <div data-i18n="success.case4Content">
+                            <p><strong>マリアさん</strong>は日本語N3と外食業技能試験に合格後、レストランで特定技能ビザを取得。2年後に店長に昇進しました。</p>
+                            <ul>
+                                <li>準備期間: 3年生1月～卒業後3ヶ月</li>
+                                <li>応募企業数: 5社</li>
+                                <li>内定企業: 有名レストランチェーン</li>
+                                <li>成功のポイント: 接客経験と明るい人柄を評価</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+        
+                <!-- 追加情報セクション -->
+                <section id="additional" class="content">
+                    <h2 data-i18n="additional.title">追加リソースとサポート</h2>
+                    <p data-i18n="additional.description">就職活動をサポートする追加のリソースとサービスです。</p>
+                    
+                    <div class="case-card">
+                        <h3 data-i18n="additional.resourcesTitle">有用なリソース</h3>
+                        <ul>
+                            <li data-i18n="additional.resource1">
+                                <strong>日本学生支援機構（JASSO）の留学生就職サポート</strong><br>
+                                URL: https://www.jasso.go.jp
+                            </li>
+                            <li data-i18n="additional.resource2">
+                                <strong>ハローワークの留学生向け就職相談</strong><br>
+                                各地のハローワークで予約制
+                            </li>
+                            <li data-i18n="additional.resource3">
+                                <strong>業界別就職ガイドブック</strong><br>
+                                大学キャリアセンターで入手可
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="case-card">
+                        <h3 data-i18n="additional.supportTitle">サポートサービス</h3>
+                        <ul>
+                            <li data-i18n="additional.support1">
+                                <strong>大学のキャリアセンター（留学生担当者に相談）</strong><br>
+                                個別面談、ES添削、模擬面接などを提供
+                            </li>
+                            <li data-i18n="additional.support2">
+                                <strong>日本語学校の就職支援コース</strong><br>
+                                ビジネス日本語と就活対策を組み合わせたプログラム
+                            </li>
+                            <li data-i18n="additional.support3">
+                                <strong>留学生向け就職セミナー（随時開催）</strong><br>
+                                企業説明会や業界研究セミナーに積極的に参加
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="urgent-box">
+                        <h3 data-i18n="additional.contactTitle">緊急相談窓口</h3>
+                        <p data-i18n="additional.contactContent">
+                            就職活動で困ったことがあれば、すぐに大学の国際課またはキャリアセンターに相談してください。<br>
+                            留学生専用の相談窓口を設けている場合もあります。
+                        </p>
+                    </div>
+                </section>
+    </main>
+
+    <footer>
+        <p data-i18n="footer.copyright">&copy; 2023 留学生就職サポートプロジェクト</p>
+        <p data-i18n="footer.contact">お問い合わせ: international-career@example.com</p>
+    </footer>
+
+    <script>
+        const translations = {
+            ja: {
+                title: "新3年生留学生向け就職サポート",
+                subtitle: "日本の早期就活スケジュールに完全対応",
+                nav: {
+                    schedule: "就活スケジュール",
+                    urgent: "今すぐやること",
+                    visa: "ビザガイド",
+                    specified: "特定技能ビザ",
+                    industry: "業界別情報",
+                    skills: "必須スキル",
+                    success: "成功事例",
+                    additional: "追加リソース"
+                },
+                schedule: {
+                    title: "3年生の就活スケジュール",
+                    description: "日本の就職活動は早期化しています。3年生のうちから計画的に準備を進めましょう。",
+                    urgentTitle: "緊急対応が必要です！",
+                    urgentContent: "日本の就職活動は3年生の3月（大学3年次の終わり）から本格化します。今すぐ準備を開始しましょう！",
+                    month1: "4月（3年生開始）",
+                    month2: "5月",
+                    month3: "6月",
+                    month4: "7月-8月",
+                    month5: "9月-12月",
+                    month6: "1月-3月",
+                    priorityHigh: "高優先度",
+                    priorityMedium: "中優先度",
+                    priorityLow: "低優先度",
+                    event1_1: "自己分析の開始",
+                    event1_1_detail1: "【具体的な行動】: 大学のキャリアセンターで配布されている自己分析シートを使用するか、オンラインツール（例: リクナビの自己分析ツール）を利用",
+                    event1_1_detail2: "【成功のコツ】: 母国語でまず考えを整理し、その後日本語で表現する二段階方式がおすすめ",
+                    event1_1_detail3: "【留学生向けポイント】: 日本語能力と異文化適応力を強みとしてアピールできるよう整理",
+                    event1_1_detail4: "【所要時間】: 約10時間（複数回に分けて実施可）",
+                    event1_2: "業界研究の開始",
+                    event1_2_detail1: "【具体的な行動】: 興味のある業界を3つ選び、各業界の特徴・主要企業・将来性を調べる",
+                    event1_2_detail2: "【成功のコツ】: 留学生の採用実績がある企業に注目し、OB/OG訪問を計画",
+                    event1_2_detail3: "【留学生向けポイント】: ビザスポンサー実績のある企業を優先的に調査",
+                    event1_3: "日本語能力試験(N2以上)の受験計画",
+                    event1_3_detail1: "【具体的な行動】: 7月と12月の試験日程を確認し、学習スケジュールを作成",
+                    event1_3_detail2: "【成功のコツ】: 週に10時間の学習時間を確保し、模擬試験を定期的に受ける",
+                    event1_3_detail3: "【留学生向けポイント】: ビジネス日本語に特化した教材を使用する",
+                    event2_1: "キャリアセンター登録",
+                    event2_1_detail1: "【具体的な行動】: 大学のキャリアセンターに登録し、留学生向けの就職支援プログラムを確認",
+                    event2_1_detail2: "【成功のコツ】: 定期的にキャリアアドバイザーと面談を設定",
+                    event2_1_detail3: "【留学生向けポイント】: ビザ関連の相談ができるアドバイザーを探す",
+                    event2_2: "エントリーシートの書き方講座",
+                    event2_2_detail1: "【具体的な行動】: キャリアセンターや就活サイトが主催する講座に参加",
+                    event2_2_detail2: "【成功のコツ】: 実際のESを3つ以上書き，添削を受ける",
+                    event2_2_detail3: "【留学生向けポイント】: 日本語ネイティブチェックを必ず受ける",
+                    event2_3: "ビジネス日本語クラスの受講",
+                    event2_3_detail1: "【具体的な行動】: 大学や地域の日本語学校が提供するビジネス日本語コースに申し込む",
+                    event2_3_detail2: "【成功のコツ】: 敬語やビジネスマナーに重点を置く",
+                    event2_3_detail3: "【留学生向けポイント】: 面接ロールプレイを含むコースを選ぶ",
+                    event3_1: "夏季インターンシップ応募",
+                    event3_1_detail1: "【具体的な行動】: 志望業界のインターンシップ情報を収集し，5社以上に応募",
+                    event3_1_detail2: "【成功のコツ】: 留学生歓迎と明記されているプログラムを優先",
+                    event3_1_detail3: "【留学生向けポイント】: ビザサポートのあるインターンシップを確認",
+                    event3_2: "SPI試験対策開始",
+                    event3_2_detail1: "【具体的な行動】: SPI対策本を購入し，週に2回模擬試験を受ける",
+                    event3_2_detail2: "【成功のコツ】: 苦手分野を特定し，重点的に学習",
+                    event3_2_detail3: "【留学生向けポイント】: 日本語の語彙問題に注力する",
+                    event3_3: "企業説明会への参加",
+                    event3_3_detail1: "【具体的な行動】: 大学のキャリアサイトで留学生向け説明会を検索し，予約",
+                    event3_3_detail2: "【成功のコツ】: 事前に企業研究を行い，質問を準備",
+                    event3_3_detail3: "【留学生向けポイント】: ビザ対応について必ず質問する",
+                    event4_1: "夏季インターンシップ参加",
+                    event4_1_detail1: "【具体的な行動】: インターンシップに積極的に参加し，ネットワークを構築",
+                    event4_1_detail2: "【成功のコツ】: 最終日にフィードバックを求め，改善点をメモ",
+                    event4_1_detail3: "【留学生向けポイント】: インターン中の成果を英語と日本語で記録",
+                    event4_2: "業界別セミナー参加",
+                    event4_2_detail1: "【具体的な行動】: 興味のある業界のセミナーに3つ以上参加",
+                    event4_2_detail2: "【成功のコツ】: 名刺を作成し，積極的に質問する",
+                    event4_2_detail3: "【留学生向けポイント】: グローバル部門の担当者と接触を図る",
+                    event4_3: "エントリーシート作成",
+                    event4_3_detail1: "【具体的な行動】: 志望企業5社分のESを完成させる",
+                    event4_3_detail2: "【成功のコツ】: ストーリー性を持たせ，具体的なエピソードを入れる",
+                    event4_3_detail3: "【留学生向けポイント】: 異文化経験を強みとしてアピール",
+                    event5_1: "本選考のエントリー開始",
+                    event5_1_detail1: "【具体的な行動】: 目標企業20社にエントリーし，スケジュールを管理",
+                    event5_1_detail2: "【成功のコツ】: 企業ごとにカスタマイズしたESを作成",
+                    event5_1_detail3: "【留学生向けポイント】: ビザサポートの有無を早期に確認",
+                    event5_2: "筆記試験対策",
+                    event5_2_detail1: "【具体的な行動】: SPI/GAB/玉手箱など，企業ごとの試験形式に合わせて対策",
+                    event5_2_detail2: "【成功のコツ】: 時間制限を設けて模擬試験を実施",
+                    event5_2_detail3: "【留学生向けポイント】: 日本語の長文読解に重点を置く",
+                    event5_3: "模擬面接の実施",
+                    event5_3_detail1: "【具体的な行動】: キャリアセンターや友人と週1回模擬面接を行う",
+                    event5_3_detail2: "【成功のコツ】: ビデオ録画して改善点を分析",
+                    event5_3_detail3: "【留学生向けポイント】: 日本語の微妙なニュアンスをネイティブにチェックしてもらう",
+                    event6_1: "面接対策の強化",
+                    event6_1_detail1: "【具体的な行動】: 志望企業ごとの面接対策を行い，想定問答集を作成",
+                    event6_1_detail2: "【成功のコツ】: 企業研究を深め，志望動機を具体化",
+                    event6_1_detail3: "【留学生向けポイント】: ビザ関連の質問への回答を準備",
+                    event6_2: "内定後の手続き準備",
+                    event6_2_detail1: "【具体的な行動】: 内定を受けた場合のビザ申請書類を確認",
+                    event6_2_detail2: "【成功のコツ】: 大学の国際課と早期に相談",
+                    event6_2_detail3: "【留学生向けポイント】: 卒業証明書や成績証明書の準備を前倒しで行う",
+                    event6_3: "ビザ申請の準備",
+                    event6_3_detail1: "【具体的な行動】: 必要書類リストを作成し，順次収集",
+                    event6_3_detail2: "【成功のコツ】: 企業の人事部門と密に連絡を取る",
+                    event6_3_detail3: "【留学生向けポイント】: 申請時期を逆算してスケジュール化"
+                },
+                urgent: {
+    title: "緊急アクション項目",
+    description: "日本の採用プロセスは非常に速く進行します。これらの項目は即座の対応が必要です。",
+    box1Title: "日本語能力の確認",
+    box1Content: "<p>『技術・人文知識・国際業務』ビザ取得には、JLPT N2以上の合格が事実上必須です。未取得の場合は<strong>すぐに</strong>学習計画を立ててください。</p><ul><li>JLPT公式サイトで試験日程を確認</li><li>週10時間の学習時間を確保</li><li>ビジネス日本語専門教材を使用</li></ul>",
+    box2Title: "自己分析の完了",
+    box2Content: "<p>自己分析は就職活動の基礎です。3年生の4月までに完了し、自身の強みと志望業界を明確にしましょう。</p><ul><li>大学のキャリアセンター提供ワークシートを活用</li><li>まず母国語で考えを整理し、その後日本語で</li><li>留学生ならではの強み（異文化適応力等）を特定</li></ul>",
+    box3Title: "キャリアセンターの活用",
+    box3Content: "<p>大学のキャリアセンターには留学生向け特別サポートがある場合があります。早期登録でこれらのサービスを利用しましょう。</p><ul><li>留学生専門のアドバイザーを確認</li><li>ビザ関連相談の有無を確認</li><li>定期的な面談をスケジュール</li></ul>",
+    actionTitle: "今週のTo-do:",
+    action1: "JLPTスケジュール確認と登録",
+    action2: "大学キャリアセンターの予約取得",
+    action3: "自己分析ワークシートのダウンロードと開始",
+    action4: "業界研究の情報源リスト作成"
+},
+visa: {
+    title: "ビザ取得ガイド",
+    description: "日本で働くために必要な就労ビザ（在留資格）に関する情報",
+    warningTitle: "重要：日本語能力試験について",
+    warningContent: "『技術・人文知識・国際業務』ビザを取得するには、JLPT N2以上の合格が事実上必須です。N3やN4レベルでは多くの企業が採用しません。",
+    typesTitle: "主な就労ビザの種類:",
+    type1Title: "技術・人文知識・国際業務ビザ",
+    type1Item1: "対象職種: 事務職、技術職、翻訳など",
+    type1Item2: "要件: 大学卒業見込みまたは実務経験",
+    type1Item3: "日本語: JLPT N2以上が事実上必要",
+    type1Item4: "期間: 5年/3年/1年",
+    type2Title: "特定活動ビザ（就職活動）",
+    type2Item1: "目的: 卒業後の就職活動用",
+    type2Item2: "期間: 最長1年",
+    type2Item3: "条件: 週28時間までのアルバイト可",
+    requirementsTitle: "ビザ要件:",
+    requirement1: "JLPT N2以上（技術・人文知識・国際業務ビザの場合）",
+    requirement2: "大学・専門学校卒業見込み",
+    requirement3: "雇用企業からの内定",
+    requirement4: "職務内容と学歴の関連性",
+    noteTitle: "重要な注意点:",
+    noteContent: "ビザ申請には時間がかかる場合があるため、早めに着手してください。また、大学の国際課にも相談しましょう。"
+},
+specified: {
+    title: "特定技能ビザの詳細",
+    description: "特定技能ビザ制度は、深刻な人手不足の14業種で外国人労働者を認める制度です。",
+    box1Title: "特定技能ビザの特徴",
+    box1Content: "特定技能1号（最長5年）と特定技能2号（無期限）の2種類があります。留学生は主に1号の対象です。",
+    industriesTitle: "主要な特定産業分野",
+    tableHeader1: "業種",
+    tableHeader2: "必要な技能試験",
+    tableHeader3: "必要な日本語レベル",
+    industry1: "飲食料品製造業",
+    exam1: "飲食料品製造技能測定試験",
+    japanese1: "JLPT N4相当以上",
+    industry2: "外食業",
+    exam2: "外食業技能測定試験",
+    japanese2: "JLPT N4相当以上",
+    industry3: "宿泊業",
+    exam3: "宿泊業技能測定試験",
+    japanese3: "JLPT N4相当以上",
+    industry4: "ビルクリーニング",
+    exam4: "ビルクリーニング技能測定試験",
+    japanese4: "JLPT N4相当以上",
+    supportTitle: "支援対策:",
+    support1: "大学キャリアセンターの試験対策講座",
+    support2: "JITCOの無料日本語講座",
+    support3: "特定技能ビザ専門の就職エージェント",
+    support4: "業界団体による就職前研修",
+    caseTitle: "特定技能ビザの成功事例",
+    caseContent: "<p><strong>ベトナム出身のAnさん</strong>は観光を専攻。宿泊業技能試験とJLPT N3に合格後、東京のホテルで特定技能ビザを取得。ホテル側が日本語研修と資格取得を支援し、2年後にはフロントマネージャーに昇進しました。</p>"
+},
+industry: {
+    title: "業界別情報",
+    description: "留学生に人気の業界と必要なスキルに関する情報",
+    itTitle: "IT業界",
+    it1: "職種: システムエンジニア、プログラマー、データサイエンティストなど",
+    it2: "必要スキル: プログラミング（Python、Java等）、JLPT N2以上",
+    it3: "特徴: 技術力が重視され、日本語要件が緩和される場合も",
+    it4: "留学生の強み: 英語力と多文化対応能力",
+    manufacturingTitle: "製造業",
+    manufacturing1: "職種: 生産技術、品質管理、研究開発など",
+    manufacturing2: "必要スキル: 専門知識、JLPT N2以上、英語が有利",
+    manufacturing3: "特徴: ものづくり文化が強く、技術職が多い",
+    manufacturing4: "留学生の強み: 専門知識と日本語の組み合わせ",
+    serviceTitle: "サービス業（観光・ホテル）",
+    service1: "職種: 通訳ガイド、ホテルスタッフ、カスタマーサポートなど",
+    service2: "必要スキル: 高い日本語能力（JLPT N1が理想）、異文化理解",
+    service3: "特徴: 接客スキルが重視され、外国語能力が活かせる",
+    service4: "留学生の強み: 母国語と日本語のバイリンガル能力",
+    noteTitle: "業界選択のポイント:",
+    noteContent: "必要とされるスキルや日本語レベルは業界によって異なります。自身の強みと日本語レベルを考慮して目標を設定しましょう。"
+},
+skills: {
+    title: "必須スキルと資格",
+    description: "日本で働くために必要なスキルと取得すべき資格",
+    japaneseTitle: "日本語能力の重要性",
+    japaneseContent: "多くの企業でビジネスレベルの日本語（JLPT N2以上）が求められます。N1を取得すると選択肢が広がります。特定技能ビザでもJLPT N4レベルが必要です。",
+    essentialTitle: "必須スキル:",
+    essential1: "日本語能力（JLPT N2以上、N1が理想）",
+    essential1Detail1: "ビジネス会話レベル",
+    essential1Detail2: "敬語の適切な使用",
+    essential1Detail3: "ビジネスメールの作成",
+    essential2: "ビジネスマナー",
+    essential2Detail1: "名刺交換の作法",
+    essential2Detail2: "電話対応",
+    essential2Detail3: "会議参加スキル",
+    recommendedTitle: "推奨スキル（業界により異なる）:",
+    recommended1: "プログラミングスキル（IT業界）",
+    recommended2: "TOEIC 700点以上（国際業務）",
+    recommended3: "専門資格（簿記、CADなど）",
+    recommended4: "データ分析スキル",
+    tipTitle: "スキル習得のコツ:",
+    tipContent: "大学の授業以外にも、オンライン講座（Udemy、Coursera）や地域の専門学校を活用してスキルを習得しましょう。キャリアセンターに相談してください。"
+},
+success: {
+    title: "先輩の成功事例",
+    description: "日本での就職に成功した留学生のケーススタディ",
+    case1Title: "IT業界内定（中国出身）",
+    case1Content: "<p><strong>李さん</strong>は3年生の4月から就職活動を開始。JLPT N2取得後、夏のインターンに参加。PythonスキルをアピールしIT企業から内定を得ました。</p><ul><li>準備期間: 3年生4月～3月</li><li>応募企業数: 15社</li><li>内定先: 中堅IT企業のシステムエンジニア</li><li>成功の鍵: 日本語での技術ブログ開設</li></ul>",
+    case2Title: "製造業内定（ベトナム出身）",
+    case2Content: "<p><strong>Nguyenさん</strong>は大学院で機械工学を専攻。JLPT N1を取得し、研究内容をアピールして自動車メーカーから内定を得ました。</p><ul><li>準備期間: 修士1年次から</li><li>応募企業数: 8社</li><li>内定先: 大手自動車メーカーの研究開発</li><li>成功の鍵: 学会発表経験</li></ul>",
+    case3Title: "観光業界内定（韓国出身）",
+    case3Content: "<p><strong>キムさん</strong>は3年生の夏までにJLPT N1を取得。ホテルのアルバイト経験を活かし、一流ホテルから内定を得ました。</p><ul><li>準備期間: 2年生秋から</li><li>応募企業数: 10社</li><li>内定先: 国際ホテルチェーンのフロント業務</li><li>成功の鍵: 英語・韓国語・日本語のトリリンガル</li></ul>",
+    case4Title: "特定技能ビザ就職（フィリピン出身）",
+    case4Content: "<p><strong>マリアさん</strong>はJLPT N3と外食業技能試験に合格後、飲食店で特定技能ビザを取得。2年後に店長に昇進しました。</p><ul><li>準備期間: 3年生1月～卒業後3ヶ月</li><li>応募企業数: 5社</li><li>内定先: 有名レストランチェーン</li><li>成功の鍵: 接客経験と明るい性格</li></ul>"
+},
+additional: {
+    title: "追加リソースとサポート",
+    description: "就職活動をサポートする追加リソースとサービス",
+    resourcesTitle: "有用なリソース:",
+    resource1: "<strong>JASSOの留学生就職支援</strong><br>URL: https://www.jasso.go.jp",
+    resource2: "<strong>ハローワークの留学生向け就職相談</strong><br>各地のハローワークで予約制",
+    resource3: "<strong>業界別就職ガイド</strong><br>大学キャリアセンターで入手可",
+    supportTitle: "支援サービス:",
+    support1: "<strong>大学キャリアセンター（留学生アドバイザーに相談）</strong><br>個別相談、書類添削、模擬面接を提供",
+    support2: "<strong>日本語学校の就職支援コース</strong><br>ビジネス日本語と就職活動準備を組み合わせた内容",
+    support3: "<strong>留学生向け就職セミナー（定期的に開催）</strong><br>企業説明会や業界研究セミナーに参加",
+    contactTitle: "緊急相談:",
+    contactContent: "就職活動で困難に直面した場合は、すぐに大学の国際課やキャリアセンターに相談してください。<br>留学生専用のサポートデスクを設けている場合もあります。"
+},
+footer: {
+    copyright: "&copy; 2023 留学生就職支援プロジェクト",
+    contact: "連絡先: international-career@example.com"
+}
+                
+                
+            },
+            en: {
+                title: "Job Support for 3rd Year International Students",
+                subtitle: "Complete guide for Japan's early recruitment schedule",
+                nav: {
+                    schedule: "Recruitment Schedule",
+                    urgent: "Urgent Actions",
+                    visa: "Visa Guide",
+                    specified: "Specified Skilled Visa",
+                    industry: "Industry Info",
+                    skills: "Essential Skills",
+                    success: "Success Stories",
+                    additional: "Additional Resources"
+                },
+                schedule: {
+                    title: "Recruitment Schedule for 3rd Year",
+                    description: "Japan's job hunting starts very early. Start preparing systematically from your 3rd year.",
+                    urgentTitle: "Urgent action required!",
+                    urgentContent: "Japan's recruitment activities begin in earnest in March of your 3rd year. Start preparing now!",
+                    month1: "April (Start of 3rd Year)",
+                    month2: "May",
+                    month3: "June",
+                    month4: "July-August",
+                    month5: "September-December",
+                    month6: "January-March",
+                    priorityHigh: "High Priority",
+                    priorityMedium: "Medium Priority",
+                    priorityLow: "Low Priority",
+                    event1_1: "Start self-analysis",
+                    event1_1_detail1: "【Action】: Use self-analysis sheets from career center or online tools",
+                    event1_1_detail2: "【Tip】: Organize thoughts in native language first, then in Japanese",
+                    event1_1_detail3: "【For Int'l Students】: Highlight Japanese ability and cross-cultural adaptability",
+                    event1_1_detail4: "【Time Required】: About 10 hours (can be divided)",
+                    event1_2: "Start industry research",
+                    event1_2_detail1: "【Action】: Research 3 industries of interest",
+                    event1_2_detail1: "【Action】: Research 3 industries of interest",
+                    event1_2_detail2: "【Tip】: Focus on companies with history of hiring international students",
+                    event1_2_detail3: "【For Int'l Students】: Check visa sponsorship history",
+                    event1_3: "Plan for JLPT N2+",
+                    event1_3_detail1: "【Action】: Check July/December test dates and create study schedule",
+                    event1_3_detail2: "【Tip】: Study 10 hours weekly with regular mock tests",
+                    event1_3_detail3: "【For Int'l Students】: Use business Japanese materials",
+                    event2_1: "Register with career center",
+            event2_1_detail1: "[Action Items]: Register with your university's career center and check support programs for international students",
+            event2_1_detail2: "[Tips for Success]: Schedule regular meetings with career advisors",
+            event2_1_detail3: "[For International Students]: Find advisors who can consult about visa matters",
+            event2_2: "Application document writing workshops",
+            event2_2_detail1: "[Action Items]: Attend workshops hosted by career centers or job hunting websites",
+            event2_2_detail2: "[Tips for Success]: Write at least 3 actual application documents and get them reviewed",
+            event2_2_detail3: "[For International Students]: Always get native Japanese speakers to check your documents",
+            event2_3: "Take business Japanese classes",
+            event2_3_detail1: "[Action Items]: Enroll in business Japanese courses offered by your university or local language schools",
+            event2_3_detail2: "[Tips for Success]: Focus on honorifics and business manners",
+            event2_3_detail3: "[For International Students]: Choose courses that include interview role-playing",
+            event3_1: "Apply for summer internships",
+            event3_1_detail1: "[Action Items]: Gather internship information in your target industries and apply to at least 5 companies",
+            event3_1_detail2: "[Tips for Success]: Prioritize programs that explicitly welcome international students",
+            event3_1_detail3: "[For International Students]: Confirm visa support availability for internships",
+            event3_2: "Start SPI exam preparation",
+            event3_2_detail1: "[Action Items]: Purchase SPI preparation books and take practice tests twice weekly",
+            event3_2_detail2: "[Tips for Success]: Identify weak areas and focus your studies",
+            event3_2_detail3: "[For International Students]: Concentrate on Japanese vocabulary questions",
+            event3_3: "Attend company information sessions",
+            event3_3_detail1: "[Action Items]: Search your university's career site for sessions for international students and make reservations",
+            event3_3_detail2: "[Tips for Success]: Research companies beforehand and prepare questions",
+            event3_3_detail3: "[For International Students]: Always ask about visa support",
+            event4_1: "Participate in summer internships",
+            event4_1_detail1: "[Action Items]: Actively participate in internships and build your network",
+            event4_1_detail2: "[Tips for Success]: Request feedback on the last day and note improvement points",
+            event4_1_detail3: "[For International Students]: Record your internship achievements in both English and Japanese",
+            event4_2: "Attend industry seminars",
+            event4_2_detail1: "[Action Items]: Attend at least 3 seminars in your industries of interest",
+            event4_2_detail2: "[Tips for Success]: Create business cards and ask questions actively",
+            event4_2_detail3: "[For International Students]: Try to connect with global division staff",
+            event4_3: "Prepare application documents",
+            event4_3_detail1: "[Action Items]: Complete application documents for 5 target companies",
+            event4_3_detail2: "[Tips for Success]: Create narrative flow with specific episodes",
+            event4_3_detail3: "[For International Students]: Highlight your cross-cultural experiences as strengths",
+            event5_1: "Begin official applications",
+            event5_1_detail1: "[Action Items]: Apply to 20 target companies and manage your schedule",
+            event5_1_detail2: "[Tips for Success]: Customize documents for each company",
+            event5_1_detail3: "[For International Students]: Confirm visa support availability early",
+            event5_2: "Written exam preparation",
+            event5_2_detail1: "[Action Items]: Prepare for different test formats (SPI/GAB/Tama-box) depending on the company",
+            event5_2_detail2: "[Tips for Success]: Take timed practice tests",
+            event5_2_detail3: "[For International Students]: Focus on Japanese reading comprehension",
+            event5_3: "Conduct mock interviews",
+            event5_3_detail1: "[Action Items]: Do weekly mock interviews with career centers or friends",
+            event5_3_detail2: "[Tips for Success]: Record videos to analyze improvement points",
+            event5_3_detail3: "[For International Students]: Have native speakers check subtle Japanese nuances",
+            event6_1: "Strengthen interview preparation",
+            event6_1_detail1: "[Action Items]: Prepare company-specific interview strategies and anticipated Q&A",
+            event6_1_detail2: "[Tips for Success]: Deepen company research and specify your motivation",
+            event6_1_detail3: "[For International Students]: Prepare answers for visa-related questions",
+            event6_2: "Prepare post-offer procedures",
+            event6_2_detail1: "[Action Items]: Check required documents for visa application if you receive an offer",
+            event6_2_detail2: "[Tips for Success]: Consult early with your university's international office",
+            event6_2_detail3: "[For International Students]: Prepare graduation certificates and transcripts in advance",
+            event6_3: "Prepare visa application",
+            event6_3_detail1: "[Action Items]: Create a checklist of required documents and collect them sequentially",
+            event6_3_detail2: "[Tips for Success]: Maintain close contact with the company's HR department",
+            event6_3_detail3: "[For International Students]: Create a schedule counting backward from application deadlines"
+                },
+
+                urgent: {
+            title: "Immediate Action Items",
+            description: "Japan's recruitment process moves very quickly. These items require immediate attention.",
+            box1Title: "Confirm Japanese Language Proficiency",
+            box1Content: "<p>Passing JLPT N2 or higher is practically mandatory for the 'Engineer/Specialist in Humanities/International Services' visa. If not yet achieved, make a study plan <strong>immediately</strong>.</p><ul><li>Check test dates on the official JLPT website</li><li>Reserve 10 hours weekly for study</li><li>Use materials specialized for business Japanese</li></ul>",
+            box2Title: "Complete Self-Analysis",
+            box2Content: "<p>Self-analysis is the foundation of job hunting. Complete by April of 3rd year to clarify your strengths and target industries.</p><ul><li>Use worksheets from your university's career center</li><li>Organize thoughts in your native language first, then in Japanese</li><li>Identify strengths unique to international students (cross-cultural adaptability etc.)</li></ul>",
+            box3Title: "Utilize Career Center",
+            box3Content: "<p>Your university's career center may have special support for international students. Register early to access these services.</p><ul><li>Identify advisors specializing in international students</li><li>Confirm availability of visa-related consultations</li><li>Schedule regular meetings</li></ul>",
+            actionTitle: "To-do this week:",
+            action1: "Check JLPT schedule and register",
+            action2: "Make appointment with university career center",
+            action3: "Download and start self-analysis worksheets",
+            action4: "List information sources for industry research"
+        },
+        visa: {
+            title: "Visa Acquisition Guide",
+            description: "Information about work visas (status of residence) required to work in Japan.",
+            warningTitle: "Important: About Japanese Language Proficiency Test",
+            warningContent: "To obtain an 'Engineer/Specialist in Humanities/International Services' visa, passing JLPT N2 or higher is practically mandatory. Many companies won't hire at N3 or N4 level.",
+            typesTitle: "Main Work Visa Types:",
+            type1Title: "Engineer/Specialist in Humanities/International Services Visa",
+            type1Item1: "Target Jobs: Office work, engineers, translation, etc.",
+            type1Item2: "Requirements: Expected university graduation or work experience",
+            type1Item3: "Japanese: JLPT N2+ effectively required",
+            type1Item4: "Duration: 5/3/1 years",
+            type2Title: "Designated Activities Visa (Job Hunting)",
+            type2Item1: "Purpose: For job hunting after graduation",
+            type2Item2: "Duration: Maximum 1 year",
+            type2Item3: "Conditions: Part-time work up to 28 hours/week allowed",
+            requirementsTitle: "Visa Requirements:",
+            requirement1: "JLPT N2+ (for Engineer/Specialist visa)",
+            requirement2: "Expected graduation from university/vocational school",
+            requirement3: "Job offer from employing company",
+            requirement4: "Relevance between job content and academic background",
+            noteTitle: "Important Notes:",
+            noteContent: "Visa applications may take time, so start early. Also consult your university's international office."
+        },
+        specified: {
+            title: "Specified Skilled Visa Details",
+            description: "The Specified Skilled Visa system allows foreign workers in 14 industries with severe labor shortages.",
+            box1Title: "Specified Skilled Visa Features",
+            box1Content: "There are two types: Specified Skills 1 (up to 5 years) and Specified Skills 2 (unlimited). International students mainly qualify for Type 1.",
+            industriesTitle: "Major Specified Industries",
+            tableHeader1: "Industry",
+            tableHeader2: "Required Skill Test",
+            tableHeader3: "Japanese Level Required",
+            industry1: "Food & Beverage Manufacturing",
+            exam1: "Food Manufacturing Skill Test",
+            japanese1: "JLPT N4 equivalent+",
+            industry2: "Restaurant Industry",
+            exam2: "Restaurant Industry Skill Test",
+            japanese2: "JLPT N4 equivalent+",
+            industry3: "Accommodation Industry",
+            exam3: "Accommodation Industry Skill Test",
+            japanese3: "JLPT N4 equivalent+",
+            industry4: "Building Cleaning",
+            exam4: "Building Cleaning Skill Test",
+            japanese4: "JLPT N4 equivalent+",
+            supportTitle: "Support Measures:",
+            support1: "University career centers offer test preparation courses",
+            support2: "JITCO provides free Japanese language courses",
+            support3: "Specialized employment agencies for Specified Skilled Visa",
+            support4: "Pre-employment training by industry groups",
+            caseTitle: "Success Story with Specified Skilled Visa",
+            caseContent: "<p><strong>An (from Vietnam)</strong> majored in tourism. After passing the Accommodation Industry Skill Test and JLPT N3, obtained a Specified Skilled Visa at a Tokyo hotel. The hotel provided Japanese training and certification support, leading to promotion to front manager after 2 years.</p>"
+        },
+        industry: {
+            title: "Industry-Specific Information",
+            description: "Information about popular industries for international students and required skills.",
+            itTitle: "IT Industry",
+            it1: "Positions: System engineers, programmers, data scientists, etc.",
+            it2: "Required Skills: Programming (Python, Java, etc.), JLPT N2+",
+            it3: "Characteristics: Technical skills valued, Japanese requirements sometimes more flexible",
+            it4: "International Student Strengths: English ability and multicultural skills",
+            manufacturingTitle: "Manufacturing",
+            manufacturing1: "Positions: Production engineering, quality control, R&D, etc.",
+            manufacturing2: "Required Skills: Specialized knowledge, JLPT N2+, English helpful",
+            manufacturing3: "Characteristics: Strong manufacturing culture, many technical positions",
+            manufacturing4: "International Student Strengths: Technical knowledge combined with Japanese",
+            serviceTitle: "Service Industry (Tourism/Hotels)",
+            service1: "Positions: Interpretation guides, hotel staff, customer support, etc.",
+            service2: "Required Skills: High Japanese proficiency (JLPT N1 ideal), intercultural understanding",
+            service3: "Characteristics: Customer service skills valued, foreign language skills useful",
+            service4: "International Student Strengths: Bilingual ability in native language and Japanese",
+            noteTitle: "Industry Selection Tips:",
+            noteContent: "Required skills and Japanese levels vary by industry. Set your targets considering your strengths and Japanese level."
+        },
+        skills: {
+            title: "Essential Skills and Qualifications",
+            description: "Skills needed to work in Japan and qualifications to obtain.",
+            japaneseTitle: "Importance of Japanese Proficiency",
+            japaneseContent: "Most companies require business-level Japanese (JLPT N2+). Having N1 expands your options. Specified Skilled Visa also requires JLPT N4 level.",
+            essentialTitle: "Essential Skills:",
+            essential1: "Japanese proficiency (JLPT N2+, N1 ideal)",
+            essential1Detail1: "Business conversation level",
+            essential1Detail2: "Proper use of honorifics",
+            essential1Detail3: "Business email writing",
+            essential2: "Business manners",
+            essential2Detail1: "Business card exchange etiquette",
+            essential2Detail2: "Phone etiquette",
+            essential2Detail3: "Meeting participation skills",
+            recommendedTitle: "Recommended Skills (varies by industry):",
+            recommended1: "Programming skills (IT industry)",
+            recommended2: "TOEIC 700+ (international business)",
+            recommended3: "Specialized qualifications (bookkeeping, CAD, etc.)",
+            recommended4: "Data analysis skills",
+            tipTitle: "Skill Acquisition Tips:",
+            tipContent: "Beyond university classes, utilize online courses (Udemy, Coursera) or local vocational schools to acquire skills. Consult your career center."
+        },
+        success: {
+            title: "Senior Success Stories",
+            description: "Case studies of international students who succeeded in finding jobs in Japan.",
+            case1Title: "IT Job Offer (from China)",
+            case1Content: "<p><strong>Mr. Li</strong> started job hunting in April of 3rd year. After obtaining JLPT N2, participated in summer internship. Received offer from IT company by showcasing Python skills.</p><ul><li>Preparation Period: April-March of 3rd year</li><li>Applications: 15 companies</li><li>Offer: Systems engineer at mid-sized IT company</li><li>Key to Success: Launched technical blog in Japanese</li></ul>",
+            case2Title: "Manufacturing Offer (from Vietnam)",
+            case2Content: "<p><strong>Mr. Nguyen</strong> studied mechanical engineering in grad school. Obtained JLPT N1 and received offer from automaker by highlighting research.</p><ul><li>Preparation Period: From 1st year of master's</li><li>Applications: 8 companies</li><li>Offer: R&D at major automaker</li><li>Key to Success: Conference presentation experience</li></ul>",
+            case3Title: "Tourism Industry Offer (from Korea)",
+            case3Content: "<p><strong>Ms. Kim</strong> obtained JLPT N1 by summer of 3rd year. Used hotel part-time experience to get offer from top hotel.</p><ul><li>Preparation Period: From 2nd year fall</li><li>Applications: 10 companies</li><li>Offer: Front desk at international hotel chain</li><li>Key to Success: Trilingual in English/Korean/Japanese</li></ul>",
+            case4Title: "Specified Skilled Visa Employment (from Philippines)",
+            case4Content: "<p><strong>Maria</strong> passed JLPT N3 and Restaurant Industry Skill Test, then obtained Specified Skilled Visa at restaurant. Promoted to manager after 2 years.</p><ul><li>Preparation Period: January of 3rd year to 3 months after graduation</li><li>Applications: 5 companies</li><li>Offer: Famous restaurant chain</li><li>Key to Success: Customer service experience and cheerful personality</li></ul>"
+        },
+        additional: {
+            title: "Additional Resources and Support",
+            description: "Extra resources and services to support your job hunting.",
+            resourcesTitle: "Useful Resources:",
+            resource1: "<strong>JASSO's job support for international students</strong><br>URL: https://www.jasso.go.jp",
+            resource2: "<strong>Hello Work's job counseling for international students</strong><br>Appointment-based at local Hello Work offices",
+            resource3: "<strong>Industry-specific job guides</strong><br>Available at university career centers",
+            supportTitle: "Support Services:",
+            support1: "<strong>University career center (consult international student advisors)</strong><br>Offers individual counseling, document reviews, mock interviews",
+            support2: "<strong>Japanese language school job support courses</strong><br>Combines business Japanese with job hunting preparation",
+            support3: "<strong>Job seminars for international students (held regularly)</strong><br>Attend company info sessions and industry research seminars",
+            contactTitle: "Emergency Consultation:",
+            contactContent: "If you encounter difficulties in job hunting, immediately consult your university's international office or career center.<br>Some have dedicated support desks for international students."
+        },
+        footer: {
+            copyright: "&copy; 2023 International Student Job Support Project",
+            contact: "Contact: international-career@example.com"
+        }
+    },
+            zh: {
+    "title": "面向大三留学生的就业支持",
+    "subtitle": "全面对应日本早期求职时间表",
+    "nav": {
+        "schedule": "求职时间表",
+        "urgent": "立即行动事项",
+        "visa": "签证指南",
+        "specified": "特定技能签证",
+        "industry": "行业分类信息",
+        "skills": "必备技能",
+        "success": "成功案例",
+        "additional": "附加资源"
+    },
+    "schedule": {
+        "title": "大三求职时间表",
+        "description": "日本求职活动日趋提前化。请从大三开始有计划地进行准备。",
+        "urgentTitle": "需要紧急应对！",
+        "urgentContent": "日本求职活动将在大学三年级结束时的3月份正式启动。请立即开始准备！",
+        "month1": "4月（大三开始）",
+        "month2": "5月",
+        "month3": "6月",
+        "month4": "7月-8月",
+        "month5": "9月-12月",
+        "month6": "1月-3月",
+        "priorityHigh": "高优先级",
+        "priorityMedium": "中优先级",
+        "priorityLow": "低优先级",
+        "event1_1": "开始自我分析",
+        "event1_1_detail1": "【具体行动】: 使用大学就业中心发放的自我分析表或在线工具（如：Recruit的自我分析工具）",
+        "event1_1_detail2": "【成功秘诀】: 建议先用母语整理思路，再用日语表达的两阶段方式",
+        "event1_1_detail3": "【留学生要点】: 将日语能力和跨文化适应力整理为优势",
+        "event1_1_detail4": "【所需时间】: 约10小时（可分多次完成）",
+        "event1_2": "开始行业研究",
+        "event1_2_detail1": "【具体行动】: 选择3个感兴趣的行业，调查各行业特点、主要企业及发展前景",
+        "event1_2_detail2": "【成功秘诀】: 关注有留学生招聘经验的企业，规划校友访问",
+        "event1_2_detail3": "【留学生要点】: 优先调查有签证担保经验的企业",
+        "event1_3": "制定日语能力考试(N2以上)计划",
+        "event1_3_detail1": "【具体行动】: 确认7月和12月的考试时间，制定学习计划",
+        "event1_3_detail2": "【成功秘诀】: 确保每周10小时学习时间，定期参加模拟考试",
+        "event1_3_detail3": "【留学生要点】: 使用商务日语专用教材",
+        "event2_1": "注册就业中心",
+        "event2_1_detail1": "【具体行动】: 在大学就业中心注册，确认面向留学生的就业支持项目",
+        "event2_1_detail2": "【成功秘诀】: 定期与职业顾问安排面谈",
+        "event2_1_detail3": "【留学生要点】: 寻找可提供签证咨询的顾问",
+        "event2_2": "参加简历写作讲座",
+        "event2_2_detail1": "【具体行动】: 参加就业中心或求职网站主办的讲座",
+        "event2_2_detail2": "【成功秘诀】: 实际撰写3份以上简历并接受修改",
+        "event2_2_detail3": "【留学生要点】: 务必接受日语母语者检查",
+        "event2_3": "参加商务日语课程",
+        "event2_3_detail1": "【具体行动】: 报名大学或当地日语学校提供的商务日语课程",
+        "event2_3_detail2": "【成功秘诀】: 重点学习敬语和商务礼仪",
+        "event2_3_detail3": "【留学生要点】: 选择包含面试角色扮演的课程",
+        "event3_1": "申请暑期实习",
+        "event3_1_detail1": "【具体行动】: 收集目标行业实习信息，申请5家以上企业",
+        "event3_1_detail2": "【成功秘诀】: 优先选择明确欢迎留学生的项目",
+        "event3_1_detail3": "【留学生要点】: 确认实习是否提供签证支持",
+        "event3_2": "开始SPI考试准备",
+        "event3_2_detail1": "【具体行动】: 购买SPI备考书籍，每周进行2次模拟考试",
+        "event3_2_detail2": "【成功秘诀】: 找出薄弱环节重点学习",
+        "event3_2_detail3": "【留学生要点】: 专注日语词汇问题",
+        "event3_3": "参加企业说明会",
+        "event3_3_detail1": "【具体行动】: 在大学就业网站搜索面向留学生的说明会并预约",
+        "event3_3_detail2": "【成功秘诀】: 提前做好企业研究，准备问题",
+        "event3_3_detail3": "【留学生要点】: 务必询问签证相关问题",
+        "event4_1": "参加暑期实习",
+        "event4_1_detail1": "【具体行动】: 积极参与实习，建立人脉网络",
+        "event4_1_detail2": "【成功秘诀】: 最后一天寻求反馈并记录改进点",
+        "event4_1_detail3": "【留学生要点】: 用英语和日语记录实习成果",
+        "event4_2": "参加行业研讨会",
+        "event4_2_detail1": "【具体行动】: 参加3场以上感兴趣行业的研讨会",
+        "event4_2_detail2": "【成功秘诀】: 制作名片并积极提问",
+        "event4_2_detail3": "【留学生要点】: 尝试接触全球部门负责人",
+        "event4_3": "撰写求职简历",
+        "event4_3_detail1": "【具体行动】: 完成5家目标企业的简历",
+        "event4_3_detail2": "【成功秘诀】: 保持故事性，加入具体事例",
+        "event4_3_detail3": "【留学生要点】: 强调跨文化经验优势",
+        "event5_1": "开始正式申请",
+        "event5_1_detail1": "【具体行动】: 申请20家目标企业并管理日程",
+        "event5_1_detail2": "【成功秘诀】: 为每家企业定制简历",
+        "event5_1_detail3": "【留学生要点】: 尽早确认签证支持情况",
+        "event5_2": "笔试准备",
+        "event5_2_detail1": "【具体行动】: 根据企业要求准备SPI/GAB/玉手箱等考试",
+        "event5_2_detail2": "【成功秘诀】: 设定时间限制进行模拟考试",
+        "event5_2_detail3": "【留学生要点】: 重点准备日语长文阅读",
+        "event5_3": "进行模拟面试",
+        "event5_3_detail1": "【具体行动】: 每周与就业中心或朋友进行1次模拟面试",
+        "event5_3_detail2": "【成功秘诀】: 录像分析改进点",
+        "event5_3_detail3": "【留学生要点】: 请母语者检查日语的微妙表达",
+        "event6_1": "强化面试准备",
+        "event6_1_detail1": "【具体行动】: 针对每家企业准备面试，制作预期问答集",
+        "event6_1_detail2": "【成功秘诀】: 深入研究企业，具体化求职动机",
+        "event6_1_detail3": "【留学生要点】: 准备签证相关问题的回答",
+        "event6_2": "录取后手续准备",
+        "event6_2_detail1": "【具体行动】: 确认录取后的签证申请文件",
+        "event6_2_detail2": "【成功秘诀】: 提前与大学国际办公室沟通",
+        "event6_2_detail3": "【留学生要点】: 提前准备毕业证明和成绩单",
+        "event6_3": "签证申请准备",
+        "event6_3_detail1": "【具体行动】: 制作所需文件清单并逐步收集",
+        "event6_3_detail2": "【成功秘诀】: 与企业HR部门保持密切沟通",
+        "event6_3_detail3": "【留学生要点】: 倒推时间表安排申请时间"
+    },
+    urgent: {
+    title: "紧急行动事项",
+    description: "日本的招聘流程进展非常快。这些项目需要立即关注。",
+    box1Title: "确认日语能力",
+    box1Content: "<p>要获得『技术·人文知识·国际业务』签证，通过JLPT N2及以上考试几乎是必须的。如果尚未取得，请<strong>立即</strong>制定学习计划。</p><ul><li>在JLPT官网确认考试日期</li><li>每周预留10小时学习时间</li><li>使用商务日语专用教材</li></ul>",
+    box2Title: "完成自我分析",
+    box2Content: "<p>自我分析是求职的基础。大三4月前完成，明确自身优势和目标行业。</p><ul><li>使用大学就业中心的工作表</li><li>先用母语整理思路，再翻译成日语</li><li>找出留学生特有优势（跨文化适应能力等）</li></ul>",
+    box3Title: "利用就业中心",
+    box3Content: "<p>您大学的就业中心可能有针对留学生的特殊支持。尽早注册以使用这些服务。</p><ul><li>确认专门负责留学生的顾问</li><li>确认是否提供签证相关咨询</li><li>安排定期面谈</li></ul>",
+    actionTitle: "本周待办事项：",
+    action1: "确认JLPT日程并报名",
+    action2: "预约大学就业中心",
+    action3: "下载并开始自我分析工作表",
+    action4: "列出行业研究信息来源"
+},
+visa: {
+    title: "签证获取指南",
+    description: "关于在日本工作所需的工作签证（在留资格）信息。",
+    warningTitle: "重要：关于日语能力测试",
+    warningContent: "要获得『技术·人文知识·国际业务』签证，通过JLPT N2及以上考试几乎是必须的。许多公司在N3或N4级别不会聘用。",
+    typesTitle: "主要工作签证类型：",
+    type1Title: "技术·人文知识·国际业务签证",
+    type1Item1: "目标职位：办公室工作、工程师、翻译等",
+    type1Item2: "要求：预计大学毕业或有工作经验",
+    type1Item3: "日语：实际要求JLPT N2+",
+    type1Item4: "期限：5/3/1年",
+    type2Title: "特定活动签证（求职）",
+    type2Item1: "目的：毕业后用于求职",
+    type2Item2: "期限：最长1年",
+    type2Item3: "条件：允许每周打工28小时",
+    requirementsTitle: "签证要求：",
+    requirement1: "JLPT N2+（技术·人文知识·国际业务签证）",
+    requirement2: "预计从大学/职业学校毕业",
+    requirement3: "用人公司的录用通知",
+    requirement4: "工作内容与学历背景的相关性",
+    noteTitle: "重要注意事项：",
+    noteContent: "签证申请可能需要时间，请尽早开始。同时咨询您大学的国际办公室。"
+},
+specified: {
+    title: "特定技能签证详情",
+    description: "特定技能签证制度允许在14个人手严重不足的行业雇佣外国劳动者。",
+    box1Title: "特定技能签证特点",
+    box1Content: "分为两种：特定技能1号（最长5年）和特定技能2号（无期限）。留学生主要符合1号资格。",
+    industriesTitle: "主要特定行业",
+    tableHeader1: "行业",
+    tableHeader2: "所需技能考试",
+    tableHeader3: "要求的日语水平",
+    industry1: "食品饮料制造业",
+    exam1: "食品制造技能测试",
+    japanese1: "JLPT N4相当以上",
+    industry2: "餐饮业",
+    exam2: "餐饮业技能测试",
+    japanese2: "JLPT N4相当以上",
+    industry3: "住宿业",
+    exam3: "住宿业技能测试",
+    japanese3: "JLPT N4相当以上",
+    industry4: "建筑物清洁",
+    exam4: "建筑物清洁技能测试",
+    japanese4: "JLPT N4相当以上",
+    supportTitle: "支援措施：",
+    support1: "大学就业中心提供考试准备课程",
+    support2: "JITCO提供免费日语课程",
+    support3: "特定技能签证专业就业机构",
+    support4: "行业团体提供的就业前培训",
+    caseTitle: "特定技能签证成功案例",
+    caseContent: "<p><strong>越南籍An同学</strong>主修旅游专业。通过住宿业技能测试和JLPT N3后，在东京酒店获得特定技能签证。酒店提供日语培训和资格认证支持，2年后晋升为前台经理。</p>"
+},
+industry: {
+    title: "行业特定信息",
+    description: "关于留学生热门行业及所需技能的信息。",
+    itTitle: "IT行业",
+    it1: "职位：系统工程师、程序员、数据科学家等",
+    it2: "所需技能：编程（Python、Java等）、JLPT N2+",
+    it3: "特点：重视技术能力，有时对日语要求较灵活",
+    it4: "留学生优势：英语能力和多元文化技能",
+    manufacturingTitle: "制造业",
+    manufacturing1: "职位：生产技术、质量控制、研发等",
+    manufacturing2: "所需技能：专业知识、JLPT N2+、英语有帮助",
+    manufacturing3: "特点：制造业文化浓厚，技术职位多",
+    manufacturing4: "留学生优势：专业知识与日语结合",
+    serviceTitle: "服务业（旅游/酒店）",
+    service1: "职位：口译导游、酒店员工、客户支持等",
+    service2: "所需技能：高日语水平（理想JLPT N1）、跨文化理解",
+    service3: "特点：重视客户服务技能，外语能力有用",
+    service4: "留学生优势：母语和日语双语能力",
+    noteTitle: "行业选择提示：",
+    noteContent: "不同行业要求的技能和日语水平不同。根据自身优势和日语水平设定目标。"
+},
+skills: {
+    title: "必备技能与资格",
+    description: "在日本工作所需的技能和应取得的资格。",
+    japaneseTitle: "日语能力的重要性",
+    japaneseContent: "大多数公司要求商务水平日语（JLPT N2+）。拥有N1可扩大选择范围。特定技能签证也要求JLPT N4水平。",
+    essentialTitle: "必备技能：",
+    essential1: "日语能力（JLPT N2+，理想N1）",
+    essential1Detail1: "商务会话水平",
+    essential1Detail2: "正确使用敬语",
+    essential1Detail3: "商务邮件写作",
+    essential2: "商务礼仪",
+    essential2Detail1: "名片交换礼仪",
+    essential2Detail2: "电话礼仪",
+    essential2Detail3: "会议参与技能",
+    recommendedTitle: "推荐技能（因行业而异）：",
+    recommended1: "编程技能（IT行业）",
+    recommended2: "TOEIC 700+（国际业务）",
+    recommended3: "专业资格（簿记、CAD等）",
+    recommended4: "数据分析技能",
+    tipTitle: "技能获取技巧：",
+    tipContent: "除了大学课程，利用在线课程（Udemy、Coursera）或当地职业学校获取技能。咨询您的就业中心。"
+},
+success: {
+    title: "前辈成功案例",
+    description: "在日本成功就业的留学生案例研究。",
+    case1Title: "IT行业录用（中国籍）",
+    case1Content: "<p><strong>李先生</strong>从大三4月开始求职。取得JLPT N2后，参加暑期实习。通过展示Python技能获得IT公司录用。</p><ul><li>准备期：大三4月-3月</li><li>申请公司数：15家</li><li>录用企业：中型IT公司系统工程师</li><li>成功关键：开设日语技术博客</li></ul>",
+    case2Title: "制造业录用（越南籍）",
+    case2Content: "<p><strong>阮先生</strong>在研究生院攻读机械工程。取得JLPT N1，通过突出研究成果获得汽车制造商录用。</p><ul><li>准备期：硕士一年级开始</li><li>申请公司数：8家</li><li>录用企业：大型汽车制造商研发</li><li>成功关键：学会发表经验</li></ul>",
+    case3Title: "旅游业录用（韩国籍）",
+    case3Content: "<p><strong>金小姐</strong>在大三暑假前取得JLPT N1。利用酒店兼职经验获得顶级酒店录用。</p><ul><li>准备期：大二秋季开始</li><li>申请公司数：10家</li><li>录用企业：国际连锁酒店前台</li><li>成功关键：英语·韩语·日语三语能力</li></ul>",
+    case4Title: "特定技能签证就业（菲律宾籍）",
+    case4Content: "<p><strong>Maria</strong>通过JLPT N3和餐饮业技能测试，后在餐厅获得特定技能签证。2年后晋升为店长。</p><ul><li>准备期：大三1月-毕业后3个月</li><li>申请公司数：5家</li><li>录用企业：知名连锁餐厅</li><li>成功关键：客户服务经验和开朗性格</li></ul>"
+},
+additional: {
+    title: "额外资源与支持",
+    description: "支持您求职的额外资源和服务。",
+    resourcesTitle: "有用资源：",
+    resource1: "<strong>JASSO留学生就业支持</strong><br>网址：https://www.jasso.go.jp",
+    resource2: "<strong>Hello Work的留学生求职咨询</strong><br>各地Hello Work办公室预约制",
+    resource3: "<strong>行业特定求职指南</strong><br>大学就业中心提供",
+    supportTitle: "支持服务：",
+    support1: "<strong>大学就业中心（咨询留学生顾问）</strong><br>提供个别咨询、文件修改、模拟面试",
+    support2: "<strong>日语学校就业支持课程</strong><br>结合商务日语和求职准备",
+    support3: "<strong>留学生求职研讨会（定期举办）</strong><br>参加企业说明会和行业研究研讨会",
+    contactTitle: "紧急咨询：",
+    contactContent: "如果在求职中遇到困难，请立即联系您大学的国际办公室或就业中心。<br>有些学校设有留学生专用支持窗口。"
+},
+footer: {
+    copyright: "&copy; 2023 留学生就业支持项目",
+    contact: "联系方式：international-career@example.com"
+}
+            
+                // 其他中文翻译
+            },
+            ko: {
+    "title": "3학년 유학생 취업 지원 프로그램",
+    "subtitle": "일본의 조기 취업 스케줄에 완벽 대응",
+    "nav": {
+        "schedule": "취업 스케줄",
+        "urgent": "즉시 실행 항목",
+        "visa": "비자 가이드",
+        "specified": "특정 기술 비자",
+        "industry": "업종별 정보",
+        "skills": "필수 스킬",
+        "success": "성공 사례",
+        "additional": "추가 리소스"
+    },
+    "schedule": {
+        "title": "3학년 취업 준비 스케줄",
+        "description": "일본 취업 활동은 점점 더 일찍 시작되고 있습니다. 3학년 때부터 계획적으로 준비하세요.",
+        "urgentTitle": "긴급 대응이 필요합니다!",
+        "urgentContent": "일본 취업 활동은 3학년 3월(대학 3학년 말)부터 본격화됩니다. 지금 바로 준비를 시작하세요!",
+        "month1": "4월(3학년 시작)",
+        "month2": "5월",
+        "month3": "6월",
+        "month4": "7월-8월",
+        "month5": "9월-12월",
+        "month6": "1월-3월",
+        "priorityHigh": "높은 우선순위",
+        "priorityMedium": "중간 우선순위",
+        "priorityLow": "낮은 우선순위",
+        "event1_1": "자기 분석 시작",
+        "event1_1_detail1": "【구체적 행동】: 대학 취업 센터에서 배포하는 자기 분석 시트 사용 또는 온라인 도구(예: 리크루트의 자기 분석 도구) 활용",
+        "event1_1_detail2": "【성공 비결】: 모국어로 먼저 생각을 정리한 후 일본어로 표현하는 두 단계 방식 추천",
+        "event1_1_detail3": "【유학생 포인트】: 일본어 능력과 문화 적응력을 강점으로 어필할 수 있도록 정리",
+        "event1_1_detail4": "【소요 시간】: 약 10시간(여러 번에 나눠 진행 가능)",
+        "event1_2": "업계 연구 시작",
+        "event1_2_detail1": "【구체적 행동】: 관심 있는 업계 3개를 선택해 각 업계의 특징·주요 기업·전망을 조사",
+        "event1_2_detail2": "【성공 비결】: 유학생 채용 실적이 있는 기업에 주목, OB/OG 인터뷰 계획",
+        "event1_2_detail3": "【유학생 포인트】: 비자 스폰서 실적이 있는 기업을 우선적으로 조사",
+        "event1_3": "일본어 능력 시험(N2 이상) 응시 계획",
+        "event1_3_detail1": "【구체적 행동】: 7월과 12월 시험 일정 확인 후 학습 스케줄 수립",
+        "event1_3_detail2": "【성공 비결】: 주 10시간 학습 시간 확보, 정기적으로 모의고사 응시",
+        "event1_3_detail3": "【유학생 포인트】: 비즈니스 일본어 전용 교재 사용",
+        "event2_1": "취업 센터 등록",
+        "event2_1_detail1": "【구체적 행동】: 대학 취업 센터에 등록해 유학생 전용 취업 지원 프로그램 확인",
+        "event2_1_detail2": "【성공 비결】: 정기적으로 커리어 어드바이저와 상담 일정 조율",
+        "event2_1_detail3": "【유학생 포인트】: 비자 관련 상담이 가능한 어드바이저 찾기",
+        "event2_2": "이력서 작성법 강좌",
+        "event2_2_detail1": "【구체적 행동】: 취업 센터 또는 취업 사이트 주최 강좌 참석",
+        "event2_2_detail2": "【성공 비결】: 실제 이력서 3개 이상 작성 후 첨삭 받기",
+        "event2_2_detail3": "【유학생 포인트】: 반드시 일본어 원어민 검토 받을 것",
+        "event2_3": "비즈니스 일본어 수강",
+        "event2_3_detail1": "【구체적 행동】: 대학 또는 지역 일본어 학교 제공 비즈니스 일본어 코스 신청",
+        "event2_3_detail2": "【성공 비결】: 경어와 비즈니스 매너에 중점",
+        "event2_3_detail3": "【유학생 포인트】: 면접 롤플레이 포함된 코스 선택",
+        "event3_1": "여름 인턴십 지원",
+        "event3_1_detail1": "【구체적 행동】: 지망 업계 인턴십 정보 수집 후 5개사 이상 지원",
+        "event3_1_detail2": "【성공 비결】: 유학생 환영이 명시된 프로그램 우선",
+        "event3_1_detail3": "【유학생 포인트】: 비자 지원 가능한 인턴십 확인",
+        "event3_2": "SPI 시험 대책 시작",
+        "event3_2_detail1": "【구체적 행동】: SPI 대비 서적 구입 후 주 2회 모의고사 응시",
+        "event3_2_detail2": "【성공 비결】: 취약 분야 파악 후 집중 학습",
+        "event3_2_detail3": "【유학생 포인트】: 일본어 어휘 문제에 집중",
+        "event3_3": "기업 설명회 참석",
+        "event3_3_detail1": "【구체적 행동】: 대학 취업 사이트에서 유학생 전용 설명회 검색 후 예약",
+        "event3_3_detail2": "【성공 비결】: 사전 기업 연구 진행 후 질문 준비",
+        "event3_3_detail3": "【유학생 포인트】: 비자 대응에 대해 반드시 질문",
+        "event4_1": "여름 인턴십 참가",
+        "event4_1_detail1": "【구체적 행동】: 인턴십에 적극 참여하며 네트워크 구축",
+        "event4_1_detail2": "【성공 비결】: 마지막 날 피드백 요청 후 개선점 메모",
+        "event4_1_detail3": "【유학생 포인트】: 인턴십 성과를 영어와 일본어로 기록",
+        "event4_2": "업계별 세미나 참석",
+        "event4_2_detail1": "【구체적 행동】: 관심 업계 세미나 3개 이상 참석",
+        "event4_2_detail2": "【성공 비결】: 명함 제작 후 적극적 질문",
+        "event4_2_detail3": "【유학생 포인트】: 글로벌 부서 담당자와 접촉 시도",
+        "event4_3": "이력서 작성",
+        "event4_3_detail1": "【구체적 행동】: 지망 기업 5개사 분의 이력서 완성",
+        "event4_3_detail2": "【성공 비결】: 스토리성 부여, 구체적 에피소드 포함",
+        "event4_3_detail3": "【유학생 포인트】: 문화 차이 경험을 강점으로 어필",
+        "event5_1": "본 채용 지원 시작",
+        "event5_1_detail1": "【구체적 행동】: 목표 기업 20개사에 지원 후 스케줄 관리",
+        "event5_1_detail2": "【성공 비결】: 기업별 맞춤형 이력서 작성",
+        "event5_1_detail3": "【유학생 포인트】: 비자 지원 여부 조기 확인",
+        "event5_2": "필기 시험 대책",
+        "event5_2_detail1": "【구체적 행동】: SPI/GAB/타마테바코 등 기업별 시험 형식에 맞춰 대비",
+        "event5_2_detail2": "【성공 비결】: 시간 제한 설정 후 모의고사 실시",
+        "event5_2_detail3": "【유학생 포인트】: 일본어 장문 독해에 중점",
+        "event5_3": "모의 면접 실시",
+        "event5_3_detail1": "【구체적 행동】: 취업 센터 또는 친구와 주 1회 모의 면접 진행",
+        "event5_3_detail2": "【성공 비결】: 영상 촬영 후 개선점 분석",
+        "event5_3_detail3": "【유학생 포인트】: 일본어 미묘한 뉘앙스 원어민 확인 요청",
+        "event6_1": "면접 대책 강화",
+        "event6_1_detail1": "【구체적 행동】: 지망 기업별 면접 대비 후 예상 Q&A 제작",
+        "event6_1_detail2": "【성공 비결】: 기업 연구 심화, 지원 동기 구체화",
+        "event6_1_detail3": "【유학생 포인트】: 비자 관련 질문 답변 준비",
+        "event6_2": "내정 후 절차 준비",
+        "event6_2_detail1": "【구체적 행동】: 내정 시 비자 신청 서류 확인",
+        "event6_2_detail2": "【성공 비결】: 대학 국제실과 조기 상담",
+        "event6_2_detail3": "【유학생 포인트】: 졸업 증명서·성적 증명서 서둘러 준비",
+        "event6_3": "비자 신청 준비",
+        "event6_3_detail1": "【구체적 행동】: 필요 서류 리스트 작성 후 순차적 수집",
+        "event6_3_detail2": "【성공 비결】: 기업 인사 부서와 긴밀히 연락",
+        "event6_3_detail3": "【유학생 포인트】: 신청 시기 역산해 스케줄화"
+    },
+    urgent: {
+    title: "긴급 실행 항목",
+    description: "일본의 채용 프로세스는 매우 빠르게 진행됩니다. 이 항목들은 즉각적인 주의가 필요합니다.",
+    box1Title: "일본어 능력 확인",
+    box1Content: "<p>'기술·인문지식·국제업무' 비자를 취득하려면 JLPT N2 이상 합격이 사실상 필수입니다. 아직 취득하지 못한 경우 <strong>즉시</strong> 학습 계획을 수립하세요.</p><ul><li>JLPT 공식 웹사이트에서 시험 일정 확인</li><li>주 10시간 학습 시간 확보</li><li>비즈니스 일본어 전문 교재 사용</li></ul>",
+    box2Title: "자기 분석 완료",
+    box2Content: "<p>자기 분석은 취업 활동의 기초입니다. 3학년 4월까지 완료하여 자신의 강점과 목표 업종을 명확히 하세요.</p><ul><li>대학 취업 센터 제공 워크시트 활용</li><li>먼저 모국어로 생각 정리 후 일본어로 작성</li><li>유학생만의 강점(문화 간 적응력 등) 파악</li></ul>",
+    box3Title: "취업 센터 활용",
+    box3Content: "<p>대학 취업 센터에는 유학생을 위한 특별 지원이 있을 수 있습니다. 조기 등록으로 이러한 서비스를 이용하세요.</p><ul><li>유학생 전문 상담원 확인</li><li>비자 관련 상담 가능 여부 확인</li><li>정기적인 면담 일정 잡기</li></ul>",
+    actionTitle: "이번 주 할 일:",
+    action1: "JLPT 일정 확인 및 등록",
+    action2: "대학 취업 센터 예약",
+    action3: "자기 분석 워크시트 다운로드 및 시작",
+    action4: "업종 연구 정보 출처 목록 작성"
+},
+visa: {
+    title: "비자 획득 가이드",
+    description: "일본에서 일하기 위해 필요한 취업 비자(재류 자격) 정보",
+    warningTitle: "중요: 일본어 능력 시험 관련",
+    warningContent: "'기술·인문지식·국제업무' 비자를 취득하려면 JLPT N2 이상 합격이 사실상 필수입니다. N3 또는 N4 레벨에서는 많은 기업에서 채용하지 않습니다.",
+    typesTitle: "주요 취업 비자 유형:",
+    type1Title: "기술·인문지식·국제업무 비자",
+    type1Item1: "대상 직종: 사무직, 기술직, 번역 등",
+    type1Item2: "요건: 대학 졸업 예정 또는 실무 경험",
+    type1Item3: "일본어: JLPT N2 이상 사실상 필요",
+    type1Item4: "기간: 5/3/1년",
+    type2Title: "특정 활동 비자(구직 활동)",
+    type2Item1: "목적: 졸업 후 구직 활동용",
+    type2Item2: "기간: 최대 1년",
+    type2Item3: "조건: 주 28시간까지 아르바이트 가능",
+    requirementsTitle: "비자 요건:",
+    requirement1: "JLPT N2 이상(기술·인문지식·국제업무 비자용)",
+    requirement2: "대학·전문학교 졸업 예정",
+    requirement3: "고용 기업의 내정",
+    requirement4: "직무 내용과 학력 배경의 관련성",
+    noteTitle: "중요 참고 사항:",
+    noteContent: "비자 신청에 시간이 걸릴 수 있으므로 서둘러 시작하세요. 또한 대학의 국제 사무실에도 상담하세요."
+},
+specified: {
+    title: "특정 기능 비자 상세 정보",
+    description: "특정 기능 비자 제도는 인력이 심각하게 부족한 14개 업종에서 외국인 근로자를 허용합니다.",
+    box1Title: "특정 기능 비자 특징",
+    box1Content: "특정 기능 1호(최대 5년)와 특정 기능 2호(무기한) 두 종류가 있습니다. 유학생은 주로 1호 대상입니다.",
+    industriesTitle: "주요 특정 업종",
+    tableHeader1: "업종",
+    tableHeader2: "필요한 기능 시험",
+    tableHeader3: "요구되는 일본어 수준",
+    industry1: "식음료 제조업",
+    exam1: "식품 제조 기능 평가 시험",
+    japanese1: "JLPT N4 상당 이상",
+    industry2: "외식업",
+    exam2: "외식업 기능 평가 시험",
+    japanese2: "JLPT N4 상당 이상",
+    industry3: "숙박업",
+    exam3: "숙박업 기능 평가 시험",
+    japanese3: "JLPT N4 상당 이상",
+    industry4: "빌딩 청소",
+    exam4: "빌딩 청소 기능 평가 시험",
+    japanese4: "JLPT N4 상당 이상",
+    supportTitle: "지원 조치:",
+    support1: "대학 취업 센터의 시험 준비 강좌",
+    support2: "JITCO의 무료 일본어 강좌",
+    support3: "특정 기능 비자 전문 취업 에이전시",
+    support4: "업계 단체의 취업 전 훈련",
+    caseTitle: "특정 기능 비자 성공 사례",
+    caseContent: "<p><strong>베트남 출신 An 씨</strong>는 관광을 전공했습니다. 숙박업 기능 시험과 JLPT N3 합격 후, 도쿄 호텔에서 특정 기능 비자를 취득했습니다. 호텔 측이 일본어 훈련과 자격 취득을 지원하여 2년 후 프론트 매니저로 승진했습니다.</p>"
+},
+industry: {
+    title: "업종별 정보",
+    description: "유학생에게 인기 있는 업종과 필요한 스킬 정보",
+    itTitle: "IT 업종",
+    it1: "직종: 시스템 엔지니어, 프로그래머, 데이터 과학자 등",
+    it2: "필요 스킬: 프로그래밍(Python, Java 등), JLPT N2 이상",
+    it3: "특징: 기술력이 중시되며 일본어 요건이 유연한 경우도 있음",
+    it4: "유학생 강점: 영어 능력과 다문화 대응 능력",
+    manufacturingTitle: "제조업",
+    manufacturing1: "직종: 생산 기술, 품질 관리, 연구 개발 등",
+    manufacturing2: "필요 스킬: 전문 지식, JLPT N2 이상, 영어 유리",
+    manufacturing3: "특징: 제조 문화가 강하며 기술직이 많음",
+    manufacturing4: "유학생 강점: 전문 지식과 일본어 조합",
+    serviceTitle: "서비스업(관광/호텔)",
+    service1: "직종: 통역 가이드, 호텔 직원, 고객 지원 등",
+    service2: "필요 스킬: 높은 일본어 능력(이상적 JLPT N1), 문화 간 이해",
+    service3: "특징: 고객 서비스 스킬 중시, 외국어 능력 유용",
+    service4: "유학생 강점: 모국어와 일본어 이중 언어 능력",
+    noteTitle: "업종 선택 팁:",
+    noteContent: "필요한 스킬과 일본어 수준은 업종마다 다릅니다. 자신의 강점과 일본어 수준을 고려해 목표를 설정하세요."
+},
+skills: {
+    title: "필수 스킬과 자격",
+    description: "일본에서 일하기 위해 필요한 스킬과 취득해야 할 자격",
+    japaneseTitle: "일본어 능력의 중요성",
+    japaneseContent: "대부분의 기업에서 비즈니스 수준의 일본어(JLPT N2 이상)가 요구됩니다. N1을 취득하면 선택지가 넓어집니다. 특정 기능 비자도 JLPT N4 수준이 필요합니다.",
+    essentialTitle: "필수 스킬:",
+    essential1: "일본어 능력(JLPT N2 이상, 이상적 N1)",
+    essential1Detail1: "비즈니스 회화 수준",
+    essential1Detail2: "경어의 적절한 사용",
+    essential1Detail3: "비즈니스 메일 작성",
+    essential2: "비즈니스 매너",
+    essential2Detail1: "명함 교환 예절",
+    essential2Detail2: "전화 응대",
+    essential2Detail3: "회의 참여 스킬",
+    recommendedTitle: "추천 스킬(업종별 상이):",
+    recommended1: "프로그래밍 스킬(IT 업종)",
+    recommended2: "TOEIC 700점 이상(국제 업무)",
+    recommended3: "전문 자격증(부기, CAD 등)",
+    recommended4: "데이터 분석 스킬",
+    tipTitle: "스킬 습득 요령:",
+    tipContent: "대학 수업 외에도 온라인 강좌(Udemy, Coursera)나 지역 전문학교를 활용해 스킬을 습득하세요. 취업 센터에 상담하세요."
+},
+success: {
+    title: "선배 성공 사례",
+    description: "일본에서 취업에 성공한 유학생 사례 연구",
+    case1Title: "IT 업종 내정(중국 출신)",
+    case1Content: "<p><strong>리 씨</strong>는 3학년 4월부터 취업 활동을 시작했습니다. JLPT N2 취득 후, 여름 인턴십에 참여. Python 스킬을 어필해 IT 기업으로부터 내정을 받았습니다.</p><ul><li>준비 기간: 3학년 4월~3월</li><li>지원 기업 수: 15곳</li><li>내정처: 중견 IT 기업 시스템 엔지니어</li><li>성공 요인: 일본어 기술 블로그 개설</li></ul>",
+    case2Title: "제조업 내정(베트남 출신)",
+    case2Content: "<p><strong>응우옌 씨</strong>는 대학원에서 기계 공학을 전공했습니다. JLPT N1을 취득하고 연구 내용을 어필해 자동차 제조업체로부터 내정을 받았습니다.</p><ul><li>준비 기간: 석사 1학년부터</li><li>지원 기업 수: 8곳</li><li>내정처: 대형 자동차 제조업체 연구 개발</li><li>성공 요인: 학회 발표 경험</li></ul>",
+    case3Title: "관광업 내정(한국 출신)",
+    case3Content: "<p><strong>김 씨</strong>는 3학년 여름까지 JLPT N1을 취득했습니다. 호텔 아르바이트 경험을 살려 최고급 호텔로부터 내정을 받았습니다.</p><ul><li>준비 기간: 2학년 가을부터</li><li>지원 기업 수: 10곳</li><li>내정처: 국제 호텔 체인 프론트 업무</li><li>성공 요인: 영어·한국어·일본어 3개국어 능력</li></ul>",
+    case4Title: "특정 기능 비자 취업(필리핀 출신)",
+    case4Content: "<p><strong>마리아</strong>는 JLPT N3와 외식업 기능 시험에 합격한 후, 레스토랑에서 특정 기능 비자를 취득했습니다. 2년 후 점장으로 승진했습니다.</p><ul><li>준비 기간: 3학년 1월~졸업 후 3개월</li><li>지원 기업 수: 5곳</li><li>내정처: 유명 레스토랑 체인</li><li>성공 요인: 고객 서비스 경험과 밝은 성격</li></ul>"
+},
+additional: {
+    title: "추가 리소스와 지원",
+    description: "취업 활동을 지원하는 추가 리소스와 서비스",
+    resourcesTitle: "유용한 리소스:",
+    resource1: "<strong>JASSO 유학생 취업 지원</strong><br>URL: https://www.jasso.go.jp",
+    resource2: "<strong>헬로우워크 유학생 취업 상담</strong><br>각지 헬로우워크 사무소 예약제",
+    resource3: "<strong>업종별 취업 가이드</strong><br>대학 취업 센터에서 입수 가능",
+    supportTitle: "지원 서비스:",
+    support1: "<strong>대학 취업 센터(유학생 상담원 상담)</strong><br>개별 상담, 서류 첨삭, 모의 면접 제공",
+    support2: "<strong>일본어 학교 취업 지원 코스</strong><br>비즈니스 일본어와 취업 활동 준비 결합",
+    support3: "<strong>유학생 취업 세미나(정기 개최)</strong><br>기업 설명회와 업종 연구 세미나 참석",
+    contactTitle: "긴급 상담:",
+    contactContent: "취업 활동에서 어려움을 겪는 경우 즉시 대학의 국제 사무실이나 취업 센터에 상담하세요.<br>유학생 전용 지원 데스크를 마련한 경우도 있습니다."
+},
+footer: {
+    copyright: "&copy; 2023 유학생 취업 지원 프로젝트",
+    contact: "연락처: international-career@example.com"
+}
+                // 其他韩文翻译
+            }
+        };
+
+        // タブ切り替え機能
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const sectionId = this.dataset.section;
+                
+                // アクティブクラスの更新
+                document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+                this.classList.add('active');
+                
+                // コンテンツ表示切替
+                document.querySelectorAll('.content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                document.getElementById(sectionId).classList.add('active');
+                
+                // スムーズスクロール
+                const element = document.getElementById(sectionId);
+                const headerOffset = 100;
+                const elementPosition = element.getBoundingClientRect().top;
+                const offsetPosition = elementPosition - headerOffset;
+
+                window.scrollBy({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // カレンダーイベントの開閉機能
+        document.querySelectorAll('.calendar-event').forEach(event => {
+            event.addEventListener('click', function() {
+                this.classList.toggle('active');
+            });
+        });
+
+        // 言語切り替え機能
+        function changeLanguage() {
+            const lang = document.getElementById('languageSelect').value;
+            document.documentElement.lang = lang;
+
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const keys = element.dataset.i18n.split('.');
+                let translation = translations[lang];
+
+                try {
+                    keys.forEach(key => {
+                        translation = translation[key];
+                    });
+                    if (translation) {
+                        if(element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                            element.value = translation;
+                        } else {
+                            element.innerHTML = translation;
+                        }
+                    }
+                } catch (e) {
+                    console.warn(`Translation missing for key: ${keys.join('.')}`);
+                }
+            });
+        }
+
+        // 初期表示設定
+        window.onload = () => {
+            changeLanguage();
+        };
+    </script>
+</body>
+</html>
