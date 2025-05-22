@@ -353,7 +353,114 @@
             max-height: 500px;
             padding-top: 0.5rem;
         }
+        /* Tooltip関連スタイル */
 
+
+/* ツールチップアイコンのスタイル */
+.tooltip-icon {
+    margin-left: 0.5rem;
+    color: var(--accent-color);
+    cursor: help;
+    display: inline-block;
+    position: relative;
+}
+
+/* ツールチップテキストの基本スタイル */
+.tooltip-text {
+    visibility: hidden;
+    width: 300px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 0.5rem;
+    position: absolute;
+    z-index: 100;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+/* 右側表示用のスタイル */
+.tooltip-right {
+    left: calc(100% + 5px);
+}
+
+/* 右側表示用の矢印 */
+.tooltip-right::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 100%;
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent #555 transparent transparent;
+}
+
+/* 左側表示用のスタイル */
+.tooltip-left {
+    right: calc(100% + 5px);
+}
+
+/* 左側表示用の矢印 */
+.tooltip-left::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent transparent #555;
+}
+
+/* ツールチップの表示トリガー */
+.tooltip-icon:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* ツールチップ言語セレクターコンテナ */
+.tooltip-selector-container {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    margin-top: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #f8f8f8;
+    padding: 5px 10px;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* ツールチップ言語セレクターのスタイル */
+.tooltip-language-selector {
+    padding: 0.5rem;
+    border-radius: 4px;
+    background: white;
+    color: var(--primary-color);
+    border: 1px solid #ddd;
+}
+
+/* ツールチップセレクターのラベル */
+.tooltip-selector-container label {
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+    color: var(--primary-color, #333);
+    display: inline-block;
+}
+
+/* ヘッダーコンテナの調整 */
+.header-container {
+    min-height: 120px;
+    position: relative;
+    margin-bottom: 60px;
+}
         /* レスポンシブデザイン */
         @media (max-width: 768px) {
             header {
@@ -429,20 +536,30 @@
 </head>
 <body>
     <header>
-        <div class="header-container">
-            <h1 data-i18n="title">新3年生留学生向け就職サポート</h1>
-            <p data-i18n="subtitle">日本の早期就活スケジュールに合わせた完全ガイド</p>
-            <div class="language-selector-container">
-                <label for="languageSelect" class="sr-only">言語選択</label>
-                <select class="language-selector" id="languageSelect" aria-label="言語選択" onchange="changeLanguage()">
-                    <option value="ja">日本語</option>
-                    <option value="zh">中文</option>
-                    <option value="ko">한국어</option>
-                    <option value="en">English</option>
-                </select>
-            </div>
+    <div class="header-container">
+        <h1 data-i18n="title">新3年生留学生向け就職サポート</h1>
+        <p data-i18n="subtitle">日本の早期就活スケジュールに合わせた完全ガイド</p>
+        <div class="language-selector-container">
+            <label for="languageSelect">メイン言語：</label>
+            <select class="language-selector" id="languageSelect" aria-label="言語選択" onchange="changeLanguage()">
+                <option value="ja">日本語</option>
+                <option value="zh">中文</option>
+                <option value="ko">한국어</option>
+                <option value="en">English</option>
+            </select>
         </div>
-    </header>
+        
+        <div class="tooltip-selector-container">
+            <label for="tooltipLanguageSelect">ツールチップ言語：</label>
+            <select class="tooltip-language-selector" id="tooltipLanguageSelect" aria-label="ツールチップ言語選択" onchange="changeTooltipLanguage()">
+                <option value="ja">日本語 (デフォルト)</option>
+                <option value="zh">中国語</option>
+                <option value="ko">韓国語</option>
+                <option value="en">英語</option>
+            </select>
+        </div>
+    </div>
+</header>
 
     <nav>
         <div class="nav-container">
@@ -2077,6 +2194,95 @@ footer: {
         window.onload = () => {
             changeLanguage();
         };
-    </script>
+        // 既存のtranslationsオブジェクトはそのまま使用
+
+// Tooltip機能の追加
+function setupTooltips() {
+    const tooltipLang = document.getElementById('tooltipLanguageSelect').value;
+    
+    document.querySelectorAll('[data-i18n]').forEach(element => {
+        const keys = element.dataset.i18n.split('.');
+        let translation = translations[tooltipLang];
+        
+        try {
+            keys.forEach(key => {
+                translation = translation[key];
+            });
+            
+            if (translation && element.dataset.i18n !== 'title' && element.dataset.i18n !== 'subtitle') {
+                // 既存のツールチップアイコンを削除
+                const existingIcon = element.querySelector('.tooltip-icon');
+                if (existingIcon) {
+                    existingIcon.remove();
+                }
+                
+                // ツールチップアイコンを追加
+                const icon = document.createElement('span');
+                icon.className = 'tooltip-icon';
+                icon.innerHTML = '<i class="fas fa-info-circle"></i>';
+                
+                const tooltipText = document.createElement('span');
+                tooltipText.className = 'tooltip-text';
+                tooltipText.textContent = translation;
+                
+                icon.appendChild(tooltipText);
+                
+                // 要素がテキストを含む場合のみアイコンを追加
+                if (element.textContent.trim() !== '') {
+                    element.appendChild(icon);
+                }
+            }
+        } catch (e) {
+            console.warn(`Tooltip translation missing for key: ${keys.join('.')}`);
+        }
+    });
+    
+    // ツールチップの位置を調整
+    adjustTooltipPosition();
+}
+
+// ツールチップの位置を調整する関数
+function adjustTooltipPosition() {
+    const tooltips = document.querySelectorAll('.tooltip-text');
+    
+    tooltips.forEach(tooltip => {
+        // 一旦すべてのポジションクラスを削除
+        tooltip.classList.remove('tooltip-right', 'tooltip-left');
+        
+        // まず右側に表示してみる
+        tooltip.classList.add('tooltip-right');
+        
+        // 右側表示でビューポートからはみ出る場合は左側に切り替え
+        const rect = tooltip.getBoundingClientRect();
+        if (rect.right > window.innerWidth) {
+            tooltip.classList.remove('tooltip-right');
+            tooltip.classList.add('tooltip-left');
+        }
+    });
+}
+
+// 画面サイズが変わったときに位置を再調整
+window.addEventListener('resize', adjustTooltipPosition);
+
+// changeTooltipLanguage関数を既存コードと統合
+function changeTooltipLanguage() {
+    setupTooltips();
+}
+
+// 言語選択変更時のイベントハンドラ
+document.getElementById('tooltipLanguageSelect').addEventListener('change', changeTooltipLanguage);
+
+// 初期表示設定
+window.onload = () => {
+    changeLanguage();
+    setupTooltips();
+    
+    // ツールチップが表示されるときに位置を調整（ホバー時）
+    const tooltipIcons = document.querySelectorAll('.tooltip-icon');
+    tooltipIcons.forEach(icon => {
+        icon.addEventListener('mouseenter', adjustTooltipPosition);
+    });
+};
+</script>
 </body>
 </html>
